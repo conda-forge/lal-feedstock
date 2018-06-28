@@ -27,6 +27,7 @@ Current release info
 | Name | Downloads | Version | Platforms |
 | --- | --- | --- | --- |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-lal-green.svg)](https://anaconda.org/conda-forge/lal) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/lal.svg)](https://anaconda.org/conda-forge/lal) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/lal.svg)](https://anaconda.org/conda-forge/lal) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/lal.svg)](https://anaconda.org/conda-forge/lal) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-python--lal-green.svg)](https://anaconda.org/conda-forge/python-lal) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/python-lal.svg)](https://anaconda.org/conda-forge/python-lal) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/python-lal.svg)](https://anaconda.org/conda-forge/python-lal) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/python-lal.svg)](https://anaconda.org/conda-forge/python-lal) |
 
 Installing lal
 ==============
@@ -37,10 +38,10 @@ Installing `lal` from the `conda-forge` channel can be achieved by adding `conda
 conda config --add channels conda-forge
 ```
 
-Once the `conda-forge` channel has been enabled, `lal` can be installed with:
+Once the `conda-forge` channel has been enabled, `lal, python-lal` can be installed with:
 
 ```
-conda install lal
+conda install lal python-lal
 ```
 
 It is possible to list all of the versions of `lal` available on your platform with:
