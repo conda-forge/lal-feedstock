@@ -32,6 +32,12 @@ requirements:
     - six
     - lscsoft-glue
 
+test:
+  imports:
+    - lal
+  commands:
+    - lal_version --help
+
 outputs:
   - name: lal
     requirements:
@@ -98,6 +104,12 @@ outputs:
       description: |
         The LSC Algorithm Library for gravitational wave data analysis.
         This package contains the Python bindings.
+
+about:
+  home: https://wiki.ligo.org/DASWG/LALSuite
+  license: GPLv3
+  license_family: GPL
+  summary: LSC Algorithm Library
 
 extra:
   recipe-maintainers:
