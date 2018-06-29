@@ -24,7 +24,6 @@ requirements:
     - swig>=3.0.7
   host:
     - gsl
-    - blas
     - zlib
     - fftw
     - hdf5
@@ -51,6 +50,7 @@ outputs:
         - fftw
         - hdf5
       run:
+        - blas
         - gsl
         - zlib
         - fftw
