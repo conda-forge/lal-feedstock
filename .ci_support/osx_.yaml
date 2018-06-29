@@ -12,10 +12,14 @@ macos_min_version:
 - '10.9'
 numpy:
 - '1.9'
+openblas:
+- 0.2.20
 pin_run_as_build:
   gsl:
     max_pin: x.x
   hdf5:
+    max_pin: x.x.x
+  openblas:
     max_pin: x.x.x
   python:
     min_pin: x.x
