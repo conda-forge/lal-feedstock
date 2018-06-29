@@ -12,7 +12,7 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 1
+  number: 2
   skip: true  # [win]
 
 requirements:
@@ -24,6 +24,7 @@ requirements:
     - swig>=3.0.7
   host:
     - gsl
+    - blas
     - zlib
     - fftw
     - hdf5
@@ -44,6 +45,7 @@ outputs:
       build:
         - {{ compiler('c') }}
       host:
+        - blas
         - gsl
         - zlib
         - fftw
