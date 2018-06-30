@@ -1,6 +1,7 @@
 {% set name = "lal" %}
 {% set version = "6.18.0" %}
 {% set sha256 = "464601c529f5607c251a54843e749bc9bd962055cc04ba21fdf6150e392a0ba2" %}
+{% set variant = "openblas" %}
 
 package:
   name: {{ name }}
@@ -12,8 +13,10 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 1
+  number: 2
   skip: true  # [win]
+  features:
+    - blas_{{ variant }}
 
 requirements:
   build:
@@ -23,6 +26,8 @@ requirements:
     - bc
     - swig>=3.0.7
   host:
+    - blas 1.1 {{ variant }}
+    - openblas
     - gsl
     - zlib
     - fftw
@@ -44,11 +49,15 @@ outputs:
       build:
         - {{ compiler('c') }}
       host:
+        - blas 1.1 {{ variant }}
+        - openblas
         - gsl
         - zlib
         - fftw
         - hdf5
       run:
+        - blas 1.1 {{ variant }}
+        - openblas
         - gsl
         - zlib
         - fftw
