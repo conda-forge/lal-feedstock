@@ -72,6 +72,8 @@ outputs:
         - lal_simd_detect
     about:
       home: https://wiki.ligo.org/DASWG/LALSuite
+      doc_url: https://lscsoft.docs.ligo.org/lalsuite/lal/
+      dev_url: https://git.ligo.org/lscsoft/lalsuite/
       license: GPLv3
       license_family: GPL
       license_file: COPYING
@@ -103,6 +105,8 @@ outputs:
         - lal.utils
     about:
       home: https://wiki.ligo.org/DASWG/LALSuite
+      doc_url: https://lscsoft.docs.ligo.org/lalsuite/lal/
+      dev_url: https://git.ligo.org/lscsoft/lalsuite/
       license: GPLv3
       license_family: GPL
       license_file: COPYING
