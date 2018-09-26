@@ -22,7 +22,7 @@ requirements:
     - {{ compiler('c') }}
     - bc
   host:
-    - swig>=3.0.7
+    - swig >=3.0.7
     - blas 1.1 openblas
     - openblas
     - gsl
@@ -45,8 +45,6 @@ test:
 outputs:
   - name: lal
     requirements:
-      build:
-        - {{ compiler('c') }}
       host:
         - blas 1.1 openblas
         - openblas
@@ -86,11 +84,9 @@ outputs:
         needed to run applications that use the LAL library.
   - name: python-lal
     requirements:
-      build:
-        - {{ compiler('c') }}
       host:
         - {{ pin_subpackage('lal', exact=True) }}
-        - swig>=3.0.7
+        - swig >=3.0.7
         - python
         - numpy
       run:
