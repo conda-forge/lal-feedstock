@@ -1,6 +1,6 @@
 {% set name = "lal" %}
-{% set version = "6.18.0" %}
-{% set sha256 = "464601c529f5607c251a54843e749bc9bd962055cc04ba21fdf6150e392a0ba2" %}
+{% set version = "6.19.0" %}
+{% set sha256 = "729934a2f403b13f9c4f98d4d5e5d7fa4ea4e1158994165b42acc7e8149b4509" %}
 
 package:
   name: {{ name }}
@@ -12,7 +12,7 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 3
+  number: 0
   skip: true  # [win]
 
 requirements:
@@ -21,8 +21,8 @@ requirements:
     - make
     - {{ compiler('c') }}
     - bc
-    - swig>=3.0.7
   host:
+    - swig >=3.0.7
     - blas 1.1 openblas
     - openblas
     - gsl
@@ -32,7 +32,9 @@ requirements:
     - python
     - numpy
     - six
-    - lscsoft-glue
+    - ligo-segments
+    - lscsoft-glue >=1.54.1
+    - scipy
 
 test:
   imports:
@@ -43,8 +45,6 @@ test:
 outputs:
   - name: lal
     requirements:
-      build:
-        - {{ compiler('c') }}
       host:
         - blas 1.1 openblas
         - openblas
@@ -84,11 +84,9 @@ outputs:
         needed to run applications that use the LAL library.
   - name: python-lal
     requirements:
-      build:
-        - {{ compiler('c') }}
-        - swig>=3.0.7
       host:
         - {{ pin_subpackage('lal', exact=True) }}
+        - swig >=3.0.7
         - python
         - numpy
       run:
@@ -96,7 +94,9 @@ outputs:
         - python
         - numpy
         - six
+        - ligo-segments
         - lscsoft-glue
+        - scipy
     files:
       - lib/python*/site-packages/lal/**
     test:

@@ -1,9 +1,15 @@
 c_compiler:
 - toolchain_c
+channel_sources:
+- conda-forge,defaults
+channel_targets:
+- conda-forge main
+docker_image:
+- condaforge/linux-anvil
 gsl:
 - '2.2'
 hdf5:
-- 1.10.2
+- 1.10.3
 numpy:
 - '1.9'
 openblas:
