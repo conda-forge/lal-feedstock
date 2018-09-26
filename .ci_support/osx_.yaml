@@ -9,7 +9,7 @@ channel_targets:
 gsl:
 - '2.2'
 hdf5:
-- 1.10.3
+- 1.10.2
 macos_machine:
 - x86_64-apple-darwin13.4.0
 macos_min_version:
