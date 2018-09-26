@@ -9,7 +9,7 @@ docker_image:
 gsl:
 - '2.2'
 hdf5:
-- 1.10.3
+- 1.10.2
 numpy:
 - '1.9'
 openblas:
