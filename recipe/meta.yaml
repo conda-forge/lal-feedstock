@@ -21,6 +21,7 @@ requirements:
     - make
     - {{ compiler('c') }}
     - bc
+  host:
     - blas 1.1 openblas
     - openblas
     - gsl
@@ -34,11 +35,7 @@ outputs:
     script: install-c.sh
     requirements:
       build:
-        - pkg-config
-        - make
         - {{ compiler('c') }}
-        - bc
-        - swig >=3.0.7
       host:
         - blas 1.1 openblas
         - openblas
@@ -73,15 +70,12 @@ outputs:
     script: install-python.sh
     requirements:
       build:
-        - make
         - {{ compiler('c') }}
+        - make
+        - pkg-config
       host:
-        - gsl
-        - zlib
-        - fftw
-        - hdf5
-        - {{ pin_subpackage('lal', exact=True) }}
         - swig >=3.0.7
+        - {{ pin_subpackage('lal', exact=True) }}
         - python
         - numpy
         - six

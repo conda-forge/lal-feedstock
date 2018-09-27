@@ -2,7 +2,9 @@
 
 set -e
 
+export PATH="${CONDA_DEFAULT_ENV}/bin:${PATH}"
 . activate "${PREFIX}"
+
 pushd ${SRC_DIR}
 
 # configure only python bindings and pure-python extras
@@ -16,7 +18,8 @@ pushd ${SRC_DIR}
 	--enable-silent-rules
 
 # build
-make -j ${CPU_COUNT}
+make -j ${CPU_COUNT} -C swig
+make -j ${CPU_COUNT} -C python
 
 # test
 make -j ${CPU_COUNT} -C test/python check
