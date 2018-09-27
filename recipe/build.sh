@@ -1,13 +1,16 @@
 #!/bin/sh
+#
+# Configure, build, and test a LALSuite subpackage (e.g. `lal`), including
+# the SWIG interface files, but without any actual language bindings
 
-[ -f ./00boot ] && ./00boot
 ./configure \
     --prefix=$PREFIX \
-    --enable-swig-python \
+    --enable-swig \
+    --enable-swig-iface \
     --disable-swig-octave \
+    --disable-swig-python \
+    --disable-python \
     --disable-doxygen \
     --disable-gcc-flags \
     --enable-silent-rules
 make -j ${CPU_COUNT}
-make -j ${CPU_COUNT} check
-make -j ${CPU_COUNT} install
