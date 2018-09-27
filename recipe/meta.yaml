@@ -29,12 +29,6 @@ requirements:
     - hdf5
     - swig >=3.0.7
 
-test:
-  imports:
-    - lal
-  commands:
-    - lal_version --help
-
 outputs:
   - name: lal
     script: install-c.sh
