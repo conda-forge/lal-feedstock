@@ -15,7 +15,7 @@ pushd ${SRC_DIR}
 	--enable-python \
 	--disable-doxygen \
 	--disable-gcc-flags \
-	--enable-silent-rules
+	--enable-silent-rules || { cat config.log; exit 1; }
 
 # build
 make -j ${CPU_COUNT} -C swig
