@@ -2,7 +2,6 @@
 
 set -e
 
-export PATH="${CONDA_DEFAULT_ENV}/bin:${PATH}"
 . activate "${PREFIX}"
 
 pushd ${SRC_DIR}

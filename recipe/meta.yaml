@@ -69,11 +69,10 @@ outputs:
   - name: python-lal
     script: install-python.sh
     requirements:
-      build:
+      host:
         - {{ compiler('c') }}
         - make
         - pkg-config
-      host:
         - swig >=3.0.7
         - {{ pin_subpackage('lal', exact=True) }}
         - python
