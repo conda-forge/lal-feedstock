@@ -76,6 +76,10 @@ outputs:
         - make
         - {{ compiler('c') }}
       host:
+        - gsl
+        - zlib
+        - fftw
+        - hdf5
         - {{ pin_subpackage('lal', exact=True) }}
         - swig >=3.0.7
         - python
