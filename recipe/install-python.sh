@@ -2,15 +2,17 @@
 
 set -e
 
-# build only python bindings and pure-python extras
+# configure only python bindings and pure-python extras
 ./configure \
 	--prefix=$PREFIX \
-	--disable-doxygen \
-	--disable-swig \
+	--enable-swig-iface \
 	--enable-swig-python \
 	--enable-python \
+	--disable-doxygen \
 	--disable-gcc-flags \
 	--enable-silent-rules
+
+# build
 make -j ${CPU_COUNT}
 
 # test
