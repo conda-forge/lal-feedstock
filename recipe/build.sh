@@ -3,6 +3,8 @@
 # Configure, build, and test a LALSuite subpackage (e.g. `lal`), including
 # the SWIG interface files, but without any actual language bindings
 
+set -e
+
 ./configure \
     --prefix=$PREFIX \
     --enable-swig \

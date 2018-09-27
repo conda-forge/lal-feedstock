@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 # build only python bindings and pure-python extras
 ./configure \
 	--prefix=$PREFIX \
