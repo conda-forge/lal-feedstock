@@ -9,7 +9,7 @@ pushd ${SRC_DIR}
 # configure only python bindings and pure-python extras
 ./configure \
 	--prefix=$PREFIX \
-	--enable-swig-iface \
+	--disable-swig-iface \
 	--enable-swig-python \
 	--enable-python \
 	--disable-doxygen \
