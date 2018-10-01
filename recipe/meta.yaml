@@ -86,7 +86,7 @@ outputs:
         - python
         - {{ pin_compatible('numpy') }}
         - six
-        - dateutil
+        - python-dateutil
         - ligo-segments
         - lscsoft-glue
         - scipy
