@@ -9,7 +9,7 @@
 set -e
 
 ./configure \
-	--prefix="$(pwd)/build" \
+	--prefix="${PREFIX}" \
 	--enable-swig-iface \
 	--disable-swig-octave \
 	--disable-swig-python \
@@ -18,4 +18,3 @@ set -e
 	--enable-silent-rules
 make -j ${CPU_COUNT}
 make -j ${CPU_COUNT} check
-make -j ${CPU_COUNT} install

@@ -2,5 +2,5 @@
 
 set -e
 
-# copy everything from fake build to actual install
-cp -vr ${SRC_DIR}/build/* ${PREFIX}/
+source activate "${PREFIX}"
+make install

@@ -34,9 +34,10 @@ outputs:
   - name: lal
     script: install-c.sh
     requirements:
-      build:
-        - {{ compiler('c') }}
       host:
+        - {{ compiler('c') }}
+        - make
+        - swig >=3.0.7
         - blas 1.1 openblas
         - openblas
         - gsl
