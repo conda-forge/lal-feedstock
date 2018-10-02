@@ -12,7 +12,7 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 0
+  number: 1
   skip: true  # [win]
 
 requirements:
@@ -22,30 +22,22 @@ requirements:
     - {{ compiler('c') }}
     - bc
   host:
-    - swig >=3.0.7
     - blas 1.1 openblas
     - openblas
     - gsl
     - zlib
     - fftw
     - hdf5
-    - python
-    - numpy
-    - six
-    - ligo-segments
-    - lscsoft-glue >=1.54.1
-    - scipy
-
-test:
-  imports:
-    - lal
-  commands:
-    - lal_version --help
+    - swig >=3.0.7
 
 outputs:
   - name: lal
+    script: install-c.sh
     requirements:
       host:
+        - {{ compiler('c') }}
+        - make
+        - swig >=3.0.7
         - blas 1.1 openblas
         - openblas
         - gsl
@@ -59,13 +51,6 @@ outputs:
         - zlib
         - fftw
         - hdf5
-    files:
-      - bin/lal_version
-      - bin/lal_simd_detect
-      - etc/lal-user-env.*
-      - include/lal/
-      - lib/liblal*
-      - lib/pkgconfig/lal*.pc
     test:
       commands:
         - lal_version --verbose
@@ -83,13 +68,13 @@ outputs:
         This package contains the shared-object libraries and python bindings
         needed to run applications that use the LAL library.
   - name: python-lal
+    script: install-python.sh
     requirements:
       host:
-        - {{ pin_subpackage('lal', exact=True) }}
+        - {{ compiler('c') }}
+        - make
+        - pkg-config
         - swig >=3.0.7
-        - python
-        - numpy
-      run:
         - {{ pin_subpackage('lal', exact=True) }}
         - python
         - numpy
@@ -97,11 +82,21 @@ outputs:
         - ligo-segments
         - lscsoft-glue
         - scipy
-    files:
-      - lib/python*/site-packages/lal/**
+      run:
+        - {{ pin_subpackage('lal', exact=True) }}
+        - python
+        - {{ pin_compatible('numpy') }}
+        - six
+        - python-dateutil
+        - ligo-segments
+        - lscsoft-glue
+        - scipy
     test:
       imports:
         - lal
+        - lal.gpstime
+        - lal.rate
+        - lal.series
         - lal.utils
     about:
       home: https://wiki.ligo.org/DASWG/LALSuite
