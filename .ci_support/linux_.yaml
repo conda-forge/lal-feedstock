@@ -1,19 +1,26 @@
+build_number_decrement:
+- '0'
+- '1000'
 c_compiler:
+- gcc
 - toolchain_c
 channel_sources:
+- conda-forge/label/gcc7,defaults
 - conda-forge,defaults
 channel_targets:
+- conda-forge gcc7
 - conda-forge main
 docker_image:
+- condaforge/linux-anvil-comp7
 - condaforge/linux-anvil
 gsl:
 - '2.2'
 hdf5:
-- 1.10.2
+- 1.10.3
 numpy:
 - '1.9'
 openblas:
-- 0.2.20
+- 0.3.3
 pin_run_as_build:
   gsl:
     max_pin: x.x
@@ -28,7 +35,13 @@ pin_run_as_build:
     max_pin: x.x
 python:
 - '2.7'
-- '3.5'
 - '3.6'
+- '3.7'
+zip_keys:
+- - c_compiler
+  - channel_sources
+  - channel_targets
+  - docker_image
+  - build_number_decrement
 zlib:
 - '1.2'
