@@ -14,9 +14,6 @@ source:
 build:
   number: 1001
   skip: true  # [win]
-  features:
-    - blas_{{ variant }}
-
 
 requirements:
   build:
@@ -25,8 +22,8 @@ requirements:
     - {{ compiler('c') }}
     - bc
   host:
-    - blas 1.1 {{ variant }}
-    - openblas
+    - mkl-devel  {{ mkl }}  # [blas_impl == "mkl"]
+    - openblas-devel {{ openblas }}  # [blas_impl == "openblas"]
     - gsl
     - zlib
     - fftw
@@ -41,15 +38,13 @@ outputs:
         - {{ compiler('c') }}
         - make
         - swig >=3.0.7
-        - blas 1.1 {{ variant }}
-        - openblas
+        - mkl-devel  {{ mkl }}  # [blas_impl == "mkl"]
+        - openblas-devel {{ openblas }}  # [blas_impl == "openblas"]
         - gsl
         - zlib
         - fftw
         - hdf5
       run:
-        - blas 1.1 {{ variant }}
-        - openblas
         - gsl
         - zlib
         - fftw
@@ -81,8 +76,10 @@ outputs:
         - {{ pin_subpackage('lal', exact=True) }}
         - python
         - numpy
+        - six
         - ligo-segments
         - lscsoft-glue
+        - scipy
       run:
         - {{ pin_subpackage('lal', exact=True) }}
         - python
