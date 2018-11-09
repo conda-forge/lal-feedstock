@@ -96,6 +96,12 @@ outputs:
         The LSC Algorithm Library for gravitational wave data analysis.
         This package contains the Python bindings.
 
+about:
+  home: https://wiki.ligo.org/DASWG/LALSuite
+  license: GPLv3
+  license_family: GPL
+  summary: LSC Algorithm Library
+
 extra:
   recipe-maintainers:
     - duncanmmacleod
