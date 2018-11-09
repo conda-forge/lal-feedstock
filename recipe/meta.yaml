@@ -15,28 +15,15 @@ build:
   number: 1001
   skip: true  # [win]
 
-requirements:
-  build:
-    - pkg-config
-    - make
-    - {{ compiler('c') }}
-    - bc
-  host:
-    - mkl-devel  {{ mkl }}  # [blas_impl == "mkl"]
-    - openblas-devel {{ openblas }}  # [blas_impl == "openblas"]
-    - gsl
-    - zlib
-    - fftw
-    - hdf5
-    - swig >=3.0.7
-
 outputs:
   - name: lal
     script: install-c.sh
     requirements:
-      host:
+      build:
         - {{ compiler('c') }}
         - make
+        - pkg-config
+      host:
         - swig >=3.0.7
         - mkl-devel  {{ mkl }}  # [blas_impl == "mkl"]
         - openblas-devel {{ openblas }}  # [blas_impl == "openblas"]
@@ -68,10 +55,11 @@ outputs:
   - name: python-lal
     script: install-python.sh
     requirements:
-      host:
+      build:
         - {{ compiler('c') }}
         - make
         - pkg-config
+      host:
         - swig >=3.0.7
         - {{ pin_subpackage('lal', exact=True) }}
         - python
@@ -107,12 +95,6 @@ outputs:
       description: |
         The LSC Algorithm Library for gravitational wave data analysis.
         This package contains the Python bindings.
-
-about:
-  home: https://wiki.ligo.org/DASWG/LALSuite
-  license: GPLv3
-  license_family: GPL
-  summary: LSC Algorithm Library
 
 extra:
   recipe-maintainers:
