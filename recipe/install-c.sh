@@ -1,6 +1,5 @@
 #!/bin/bash
 
 set -e
-
-source activate "${PREFIX}"
+pushd ${SRC_DIR}
 make install

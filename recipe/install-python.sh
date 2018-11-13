@@ -1,9 +1,6 @@
 #!/bin/bash
 
 set -e
-
-. activate "${PREFIX}"
-
 pushd ${SRC_DIR}
 
 # configure only python bindings and pure-python extras

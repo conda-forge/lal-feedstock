@@ -12,7 +12,7 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 1
+  number: 2
   skip: true  # [win]
 
 requirements:
@@ -33,10 +33,14 @@ requirements:
 outputs:
   - name: lal
     script: install-c.sh
+    build:
+      activate_in_script: True
     requirements:
-      host:
+      build:
         - {{ compiler('c') }}
+        - pkg-config
         - make
+      host:
         - swig >=3.0.7
         - blas 1.1 openblas
         - openblas
@@ -69,11 +73,14 @@ outputs:
         needed to run applications that use the LAL library.
   - name: python-lal
     script: install-python.sh
+    build:
+      activate_in_script: True
     requirements:
-      host:
+      build:
         - {{ compiler('c') }}
         - make
         - pkg-config
+      host:
         - swig >=3.0.7
         - {{ pin_subpackage('lal', exact=True) }}
         - python

@@ -9,7 +9,7 @@ channel_targets:
 gsl:
 - '2.2'
 hdf5:
-- 1.10.2
+- 1.10.3
 macos_machine:
 - x86_64-apple-darwin13.4.0
 macos_min_version:
@@ -17,7 +17,7 @@ macos_min_version:
 numpy:
 - '1.9'
 openblas:
-- 0.2.20
+- 0.3.3
 pin_run_as_build:
   gsl:
     max_pin: x.x
@@ -32,7 +32,6 @@ pin_run_as_build:
     max_pin: x.x
 python:
 - '2.7'
-- '3.5'
 - '3.6'
 zlib:
 - '1.2'
