@@ -26,8 +26,8 @@ outputs:
         - pkg-config
         - make
         - bc
-      host:
         - swig >=3.0.7
+      host:
         - blas 1.1 openblas
         - openblas
         - gsl
@@ -66,8 +66,8 @@ outputs:
         - {{ compiler('c') }}
         - make
         - pkg-config
-      host:
         - swig >=3.0.7
+      host:
         - {{ pin_subpackage('lal', exact=True) }}
         - python
         - numpy
