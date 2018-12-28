@@ -12,8 +12,23 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 3
+  number: 1004
   skip: true  # [win]
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+    - pkg-config
+    - make
+    - bc
+    - swig >=3.0.7
+  host:
+    - blas 1.1 openblas
+    - openblas
+    - gsl
+    - zlib
+    - fftw
+    - hdf5
 
 outputs:
   - name: lal
@@ -26,8 +41,8 @@ outputs:
         - pkg-config
         - make
         - bc
-      host:
         - swig >=3.0.7
+      host:
         - blas 1.1 openblas
         - openblas
         - gsl
@@ -66,8 +81,8 @@ outputs:
         - {{ compiler('c') }}
         - make
         - pkg-config
-      host:
         - swig >=3.0.7
+      host:
         - {{ pin_subpackage('lal', exact=True) }}
         - python
         - numpy

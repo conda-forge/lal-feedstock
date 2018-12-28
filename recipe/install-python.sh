@@ -1,4 +1,8 @@
 #!/bin/bash
+#
+# Configure, built, test, and install the Python language bindings
+# for a LALSuite subpackage.
+#
 
 set -e
 pushd ${SRC_DIR}
