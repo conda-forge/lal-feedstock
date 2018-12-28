@@ -15,6 +15,21 @@ build:
   number: 1003
   skip: true  # [win]
 
+requirements:
+  build:
+    - {{ compiler('c') }}
+    - pkg-config
+    - make
+    - bc
+    - swig >=3.0.7
+  host:
+    - blas 1.1 openblas
+    - openblas
+    - gsl
+    - zlib
+    - fftw
+    - hdf5
+
 outputs:
   - name: lal
     script: install-c.sh
