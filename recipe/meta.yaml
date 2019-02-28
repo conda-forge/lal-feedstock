@@ -1,6 +1,6 @@
 {% set name = "lal" %}
-{% set version = "6.19.1" %}
-{% set sha256 = "360544a6372b279b88fde55550730985dca49c1fe7e8daaa3c6cd16a82cfcc37" %}
+{% set version = "6.19.2" %}
+{% set sha256 = "2f9035561093651f1f5dc29b20701df14497f4e493c7e26a74e3cd5c1b51baad" %}
 
 package:
   name: {{ name }}
@@ -12,7 +12,7 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 1000
+  number: 0
   skip: true  # [win]
 
 requirements:
