@@ -1,6 +1,6 @@
 {% set name = "lal" %}
-{% set version = "6.19.1" %}
-{% set sha256 = "360544a6372b279b88fde55550730985dca49c1fe7e8daaa3c6cd16a82cfcc37" %}
+{% set version = "6.19.2" %}
+{% set sha256 = "2f9035561093651f1f5dc29b20701df14497f4e493c7e26a74e3cd5c1b51baad" %}
 
 package:
   name: {{ name }}
@@ -12,7 +12,7 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 1000
+  number: 0
   skip: true  # [win]
 
 requirements:
@@ -29,49 +29,22 @@ requirements:
     - zlib
     - fftw
     - hdf5
+  run:
+    - blas 1.1 openblas
+    - openblas
+    - gsl
+    - zlib
+    - fftw
+    - hdf5
+
+test:
+  commands:
+    - lal_version --verbose
+    - lal_simd_detect
 
 outputs:
   - name: lal
-    script: install-c.sh
-    build:
-      activate_in_script: True
-    requirements:
-      build:
-        - {{ compiler('c') }}
-        - pkg-config
-        - make
-        - bc
-        - swig >=3.0.7
-      host:
-        - blas 1.1 openblas
-        - openblas
-        - gsl
-        - zlib
-        - fftw
-        - hdf5
-      run:
-        - blas 1.1 openblas
-        - openblas
-        - gsl
-        - zlib
-        - fftw
-        - hdf5
-    test:
-      commands:
-        - lal_version --verbose
-        - lal_simd_detect
-    about:
-      home: https://wiki.ligo.org/DASWG/LALSuite
-      doc_url: https://lscsoft.docs.ligo.org/lalsuite/lal/
-      dev_url: https://git.ligo.org/lscsoft/lalsuite/
-      license: GPLv3
-      license_family: GPL
-      license_file: COPYING
-      summary: LSC Algorithm Library
-      description: |
-        The LSC Algorithm Library for gravitational wave data analysis.
-        This package contains the shared-object libraries and python bindings
-        needed to run applications that use the LAL library.
+
   - name: python-lal
     script: install-python.sh
     build:
@@ -102,6 +75,7 @@ outputs:
     test:
       imports:
         - lal
+        - lal.antenna
         - lal.gpstime
         - lal.rate
         - lal.series
@@ -120,9 +94,18 @@ outputs:
 
 about:
   home: https://wiki.ligo.org/DASWG/LALSuite
+  doc_url: https://lscsoft.docs.ligo.org/lalsuite/lal/
+  dev_url: https://git.ligo.org/lscsoft/lalsuite/
   license: GPLv3
   license_family: GPL
+  license_file: COPYING
   summary: LSC Algorithm Library
+  description: |
+    The LSC Algorithm Library for gravitational wave data analysis.
+    This package contains the shared-object libraries needed to run
+    applications that use the LAL library.  If you want to install
+    the Python bindings, please install the associated python-lal
+    package.
 
 extra:
   recipe-maintainers:
