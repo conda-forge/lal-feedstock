@@ -14,8 +14,10 @@ Feedstock license: BSD 3-Clause
 Summary: LSC Algorithm Library
 
 The LSC Algorithm Library for gravitational wave data analysis.
-This package contains the shared-object libraries and python bindings
-needed to run applications that use the LAL library.
+This package contains the shared-object libraries needed to run
+applications that use the LAL library.  If you want to install
+the Python bindings, please install the associated python-lal
+package.
 
 
 Current build status

@@ -12,7 +12,7 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 0
+  number: 1
   skip: true  # [win]
 
 requirements:
@@ -44,6 +44,9 @@ test:
 
 outputs:
   - name: lal
+    build:
+      run_exports:
+        - {{ pin_subpackage("lal", max_pin="x.x") }}
 
   - name: python-lal
     script: install-python.sh
