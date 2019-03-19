@@ -12,7 +12,7 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 1
+  number: 2
   skip: true  # [win]
 
 requirements:
@@ -23,15 +23,13 @@ requirements:
     - bc
     - swig >=3.0.7
   host:
-    - blas 1.1 openblas
-    - openblas
+    - libblas
+    - libcblas
     - gsl
     - zlib
     - fftw
     - hdf5
   run:
-    - blas 1.1 openblas
-    - openblas
     - gsl
     - zlib
     - fftw
@@ -59,6 +57,8 @@ outputs:
         - pkg-config
         - swig >=3.0.7
       host:
+        - libblas
+        - libcblas
         - {{ pin_subpackage('lal', exact=True) }}
         - python
         - numpy
