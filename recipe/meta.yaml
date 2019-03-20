@@ -23,8 +23,6 @@ requirements:
     - bc
     - swig >=3.0.7
   host:
-    - libblas
-    - libcblas
     - gsl
     - zlib
     - fftw
@@ -57,8 +55,6 @@ outputs:
         - pkg-config
         - swig >=3.0.7
       host:
-        - libblas
-        - libcblas
         - {{ pin_subpackage('lal', exact=True) }}
         - python
         - numpy
