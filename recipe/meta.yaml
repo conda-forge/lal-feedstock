@@ -63,6 +63,7 @@ outputs:
         - ligo-segments
         - lscsoft-glue
         - scipy
+        - libcblas
       run:
         - {{ pin_subpackage('lal', exact=True) }}
         - python
