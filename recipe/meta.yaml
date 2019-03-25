@@ -12,7 +12,7 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 1
+  number: 2
   skip: true  # [win]
 
 requirements:
@@ -23,15 +23,12 @@ requirements:
     - bc
     - swig >=3.0.7
   host:
-    - blas 1.1 openblas
-    - openblas
+    - libcblas
     - gsl
     - zlib
     - fftw
     - hdf5
   run:
-    - blas 1.1 openblas
-    - openblas
     - gsl
     - zlib
     - fftw
@@ -66,6 +63,11 @@ outputs:
         - ligo-segments
         - lscsoft-glue
         - scipy
+        - libcblas
+        - gsl
+        - zlib
+        - fftw
+        - hdf5
       run:
         - {{ pin_subpackage('lal', exact=True) }}
         - python
@@ -75,6 +77,10 @@ outputs:
         - ligo-segments
         - lscsoft-glue
         - scipy
+        - gsl
+        - zlib
+        - fftw
+        - hdf5
     test:
       imports:
         - lal
