@@ -64,6 +64,10 @@ outputs:
         - lscsoft-glue
         - scipy
         - libcblas
+        - gsl
+        - zlib
+        - fftw
+        - hdf5
       run:
         - {{ pin_subpackage('lal', exact=True) }}
         - python
@@ -73,6 +77,10 @@ outputs:
         - ligo-segments
         - lscsoft-glue
         - scipy
+        - gsl
+        - zlib
+        - fftw
+        - hdf5
     test:
       imports:
         - lal
