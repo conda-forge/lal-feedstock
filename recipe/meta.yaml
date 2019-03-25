@@ -2,6 +2,17 @@
 {% set version = "6.19.2" %}
 {% set sha256 = "2f9035561093651f1f5dc29b20701df14497f4e493c7e26a74e3cd5c1b51baad" %}
 
+# define build number
+{% set build = 3 %}
+
+# default FFT implememntation to FFTW
+{% set fft_impl = fft_impl or 'fftw' %}
+
+# prefer FFTW builds over MKL using a build number offset
+{% if fft_impl == 'fftw' %}
+{% set build = build + 100 %}
+{% endif %}
+
 package:
   name: {{ name }}
   version: {{ version }}
@@ -10,28 +21,32 @@ source:
   fn: {{ name }}-{{ version }}.tar.xz
   url: http://software.ligo.org/lscsoft/source/lalsuite/{{ name }}-{{ version }}.tar.xz
   sha256: {{ sha256 }}
+  patches:
+    # fix overlinking
+    - pkgconfig.patch
 
 build:
-  number: 2
+  number: {{ build }}
   skip: true  # [win]
+  string: "{{ fft_impl }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}"
 
 requirements:
   build:
     - {{ compiler('c') }}
-    - pkg-config
+    - pkg-config >=0.18.0
     - make
     - bc
     - swig >=3.0.7
   host:
-    - libcblas
+    - fftw  # [fft_impl == "fftw"]
     - gsl
-    - zlib
-    - fftw
     - hdf5
+    - mkl-devel {{ mkl }}  # [fft_impl == "mkl"]
+    - zlib
   run:
     - gsl
     - zlib
-    - fftw
+    - fftw  # [fft_impl == "fftw"]
     - hdf5
 
 test:
@@ -49,38 +64,30 @@ outputs:
     script: install-python.sh
     build:
       activate_in_script: True
+      string: "{{ fft_impl }}_py{{ py }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}"
     requirements:
       build:
         - {{ compiler('c') }}
         - make
-        - pkg-config
+        - pkg-config >=0.18.0
         - swig >=3.0.7
       host:
-        - {{ pin_subpackage('lal', exact=True) }}
-        - python
-        - numpy
-        - six
-        - ligo-segments
-        - lscsoft-glue
-        - scipy
-        - libcblas
         - gsl
-        - zlib
-        - fftw
-        - hdf5
+        - {{ pin_subpackage('lal', exact=True) }}
+        - mkl-devel {{ mkl }}  # [fft_impl == "mkl"]
+        - numpy 1.11.3  # [fft_impl == "mkl"]
+        - numpy  # [fft_impl != "mkl"]
+        - python
       run:
+        - gsl
         - {{ pin_subpackage('lal', exact=True) }}
-        - python
-        - {{ pin_compatible('numpy') }}
-        - six
-        - python-dateutil
         - ligo-segments
         - lscsoft-glue
+        - {{ pin_compatible('numpy') }}
+        - python
+        - python-dateutil
         - scipy
-        - gsl
-        - zlib
-        - fftw
-        - hdf5
+        - six
     test:
       imports:
         - lal

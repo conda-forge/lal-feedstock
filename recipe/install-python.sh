@@ -7,6 +7,15 @@
 set -e
 pushd ${SRC_DIR}
 
+# if we're using MKL, the C library will have been built with
+# --enable-intelfft, so we have to use that here as well
+# select FFT implementation
+if [[ "${fft_impl}" == "mkl" ]]; then
+    FFT_CONFIG_ARGS="--disable-static --enable-intelfft"
+else
+    FFT_CONFIG_ARGS=""
+fi
+
 # configure only python bindings and pure-python extras
 ./configure \
 	--prefix=$PREFIX \
@@ -15,14 +24,13 @@ pushd ${SRC_DIR}
 	--enable-python \
 	--disable-doxygen \
 	--disable-gcc-flags \
-	--enable-silent-rules || { cat config.log; exit 1; }
+	--enable-silent-rules \
+	${FFT_CONFIG_ARGS} \
+|| { cat config.log; exit 1; }
 
 # build
 make -j ${CPU_COUNT} -C swig
 make -j ${CPU_COUNT} -C python
-
-# test
-make -j ${CPU_COUNT} -C test/python check
 
 # install
 make -j ${CPU_COUNT} -C swig install-exec-am  # swig bindings
