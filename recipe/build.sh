@@ -9,6 +9,9 @@ else
     FFT_CONFIG_ARGS=""
 fi
 
+# only link libraries we actually use
+export GSL_LIBS="-L${PREFIX}/lib -lgsl"
+
 ./configure \
 	--prefix="${PREFIX}" \
 	--enable-swig-iface \

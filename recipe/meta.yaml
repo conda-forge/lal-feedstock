@@ -72,14 +72,19 @@ outputs:
         - pkg-config >=0.18.0
         - swig >=3.0.7
       host:
+        - fftw  # [fft_impl == "fftw"]
         - gsl
+        - hdf5
         - {{ pin_subpackage('lal', exact=True) }}
         - mkl-devel {{ mkl }}  # [fft_impl == "mkl"]
         - numpy 1.11.3  # [fft_impl == "mkl"]
         - numpy  # [fft_impl != "mkl"]
         - python
+        - zlib
       run:
+        - fftw  # [fft_impl == "fftw"]
         - gsl
+        - hdf5
         - {{ pin_subpackage('lal', exact=True) }}
         - ligo-segments
         - lscsoft-glue
@@ -88,6 +93,7 @@ outputs:
         - python-dateutil
         - scipy
         - six
+        - zlib
     test:
       imports:
         - lal

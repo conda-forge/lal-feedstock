@@ -9,12 +9,14 @@ pushd ${SRC_DIR}
 
 # if we're using MKL, the C library will have been built with
 # --enable-intelfft, so we have to use that here as well
-# select FFT implementation
 if [[ "${fft_impl}" == "mkl" ]]; then
     FFT_CONFIG_ARGS="--disable-static --enable-intelfft"
 else
     FFT_CONFIG_ARGS=""
 fi
+
+# only link libraries we actually use
+export GSL_LIBS="-L${PREFIX}/lib -lgsl"
 
 # configure only python bindings and pure-python extras
 ./configure \
