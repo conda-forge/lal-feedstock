@@ -29,6 +29,8 @@ build:
   number: {{ build }}
   skip: true  # [win]
   string: "{{ fft_impl }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}"
+  ignore_run_exports:
+    - blas
 
 requirements:
   build:
@@ -65,6 +67,9 @@ outputs:
     build:
       activate_in_script: True
       string: "{{ fft_impl }}_py{{ py }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}"
+      ignore_run_exports:
+        - blas
+        - mkl
     requirements:
       build:
         - {{ compiler('c') }}
@@ -75,8 +80,7 @@ outputs:
         - gsl
         - {{ pin_subpackage('lal', exact=True) }}
         - mkl-devel {{ mkl }}  # [fft_impl == "mkl"]
-        - numpy 1.11.3  # [fft_impl == "mkl"]
-        - numpy  # [fft_impl != "mkl"]
+        - numpy
         - python
       run:
         # NOTE: on linux, python-lal links the LAL dependencies
