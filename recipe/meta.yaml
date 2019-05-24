@@ -1,9 +1,9 @@
 {% set name = "lal" %}
-{% set version = "6.19.2" %}
-{% set sha256 = "2f9035561093651f1f5dc29b20701df14497f4e493c7e26a74e3cd5c1b51baad" %}
+{% set version = "6.20.0" %}
+{% set sha256 = "dcf6468d21c4c5a447582f96b95af3b7cee683ecd126e02c29ac459db8a04960" %}
 
 # define build number
-{% set build = 3 %}
+{% set build = 0 %}
 
 # default FFT implememntation to FFTW
 {% set fft_impl = fft_impl or 'fftw' %}
