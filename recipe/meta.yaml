@@ -21,9 +21,6 @@ source:
   fn: {{ name }}-{{ version }}.tar.xz
   url: http://software.ligo.org/lscsoft/source/lalsuite/{{ name }}-{{ version }}.tar.xz
   sha256: {{ sha256 }}
-  patches:
-    # fix overlinking
-    - pkgconfig.patch
 
 build:
   number: {{ build }}
