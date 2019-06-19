@@ -3,7 +3,7 @@
 {% set sha256 = "4016ce61a87841d5122b97ba576c6a96e354ce8bcda1e734ba7218e607e034e1" %}
 
 # define build number
-{% set build = 1 %}
+{% set build = 2 %}
 
 # default FFT implememntation to FFTW
 {% set fft_impl = fft_impl or 'fftw' %}
