@@ -13,7 +13,7 @@ fft_impl:
 gsl:
 - '2.5'
 hdf5:
-- 1.10.5
+- 1.10.4
 macos_machine:
 - x86_64-apple-darwin13.4.0
 macos_min_version:
