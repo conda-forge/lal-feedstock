@@ -3,7 +3,7 @@
 {% set sha256 = "d8be097eda4082ff194496f4641a993939cff1651a60e6d69af8932bdec67ac1" %}
 
 # define build number
-{% set build = 4 %}
+{% set build = 5 %}
 
 # default FFT implememntation to FFTW
 {% set fft_impl = fft_impl or 'fftw' %}
@@ -28,6 +28,9 @@ build:
   string: "{{ fft_impl }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}"
   ignore_run_exports:
     - blas
+    # run_exports parsing for fftw is broken, so we ignore it
+    # manually, for now
+    - fftw
 
 requirements:
   build:
