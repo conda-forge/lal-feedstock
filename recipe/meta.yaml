@@ -23,14 +23,16 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: {{ build }}
-  skip: true  # [win]
-  string: "{{ fft_impl }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}"
+  error_overdepending: true
+  error_overlinking: true
   ignore_run_exports:
     - blas
     # run_exports parsing for fftw is broken, so we ignore it
     # manually, for now
     - fftw
+  number: {{ build }}
+  skip: true  # [win]
+  string: "{{ fft_impl }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}"
 
 requirements:
   build:
