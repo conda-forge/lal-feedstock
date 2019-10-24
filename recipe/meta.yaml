@@ -3,7 +3,7 @@
 {% set sha256 = "d8be097eda4082ff194496f4641a993939cff1651a60e6d69af8932bdec67ac1" %}
 
 # define build number
-{% set build = 5 %}
+{% set build = 6 %}
 
 # default FFT implememntation to FFTW
 {% set fft_impl = fft_impl or 'fftw' %}
@@ -14,23 +14,24 @@
 {% endif %}
 
 package:
-  name: {{ name }}
-  version: {{ version }}
+  name: "{{ name }}"
+  version: "{{ version }}"
 
 source:
-  fn: {{ name }}-{{ version }}.tar.xz
-  url: http://software.ligo.org/lscsoft/source/lalsuite/{{ name }}-{{ version }}.tar.xz
-  sha256: {{ sha256 }}
+  url: "http://software.ligo.org/lscsoft/source/lalsuite/{{ name }}-{{ version }}.tar.xz"
+  sha256: "{{ sha256 }}"
 
 build:
-  number: {{ build }}
-  skip: true  # [win]
-  string: "{{ fft_impl }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}"
+  error_overdepending: true
+  error_overlinking: true
   ignore_run_exports:
     - blas
     # run_exports parsing for fftw is broken, so we ignore it
     # manually, for now
     - fftw
+  number: {{ build }}
+  skip: true  # [win]
+  string: "{{ fft_impl }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}"
 
 requirements:
   build:
@@ -42,7 +43,7 @@ requirements:
   host:
     - fftw * nompi*  # [fft_impl == "fftw"]
     - gsl
-    - hdf5 1.10.4
+    - hdf5
     - mkl-devel {{ mkl }}  # [fft_impl == "mkl"]
     - zlib
   run:
@@ -65,11 +66,9 @@ outputs:
   - name: python-lal
     script: install-python.sh
     build:
-      activate_in_script: True
+      error_overdepending: true
+      error_overlinking: true
       string: "{{ fft_impl }}_py{{ py }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}"
-      ignore_run_exports:
-        - blas
-        - mkl
     requirements:
       build:
         - {{ compiler('c') }}
@@ -92,6 +91,7 @@ outputs:
         - {{ pin_subpackage('lal', exact=True) }}
         - ligo-segments
         - lscsoft-glue
+        - mkl  # [fft_impl == "mkl"]
         - {{ pin_compatible('numpy') }}
         - python
         - python-dateutil
@@ -107,25 +107,25 @@ outputs:
         - lal.series
         - lal.utils
     about:
-      home: https://wiki.ligo.org/DASWG/LALSuite
-      doc_url: https://lscsoft.docs.ligo.org/lalsuite/lal/
-      dev_url: https://git.ligo.org/lscsoft/lalsuite/
-      license: GPLv3
-      license_family: GPL
-      license_file: COPYING
-      summary: LSC Algorithm Library
+      home: "https://wiki.ligo.org/Computing/LALSuite"
+      doc_url: "https://lscsoft.docs.ligo.org/lalsuite/lal/"
+      dev_url: "https://git.ligo.org/lscsoft/lalsuite/"
+      license: "GPL-3.0-or-later"
+      license_family: "GPL"
+      license_file: "COPYING"
+      summary: "LSC Algorithm Library"
       description: |
         The LSC Algorithm Library for gravitational wave data analysis.
         This package contains the Python bindings.
 
 about:
-  home: https://wiki.ligo.org/DASWG/LALSuite
-  doc_url: https://lscsoft.docs.ligo.org/lalsuite/lal/
-  dev_url: https://git.ligo.org/lscsoft/lalsuite/
-  license: GPLv3
-  license_family: GPL
-  license_file: COPYING
-  summary: LSC Algorithm Library
+  home: "https://wiki.ligo.org/Computing/LALSuite"
+  doc_url: "https://lscsoft.docs.ligo.org/lalsuite/lal/"
+  dev_url: "https://git.ligo.org/lscsoft/lalsuite/"
+  license: "GPL-3.0-or-later"
+  license_family: "GPL"
+  license_file: "COPYING"
+  summary: "LSC Algorithm Library"
   description: |
     The LSC Algorithm Library for gravitational wave data analysis.
     This package contains the shared-object libraries needed to run
