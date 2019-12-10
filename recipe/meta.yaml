@@ -53,9 +53,12 @@ requirements:
     - zlib
 
 test:
+  requires:
+    - pkg-config
   commands:
     - lal_version --verbose
     - lal_simd_detect
+    - test "$(pkg-config --modversion ${PKG_NAME})" == "${PKG_VERSION}"  # [unix]
 
 outputs:
   - name: lal
@@ -106,6 +109,15 @@ outputs:
         - lal.rate
         - lal.series
         - lal.utils
+      requires:
+        - freezegun
+        - mock  # [py<33]
+        - pathlib  # [py<34]
+        - pytest
+      source_files:
+        - test/python
+      commands:
+        - pushd test/python; python -m pytest -v; popd
     about:
       home: "https://wiki.ligo.org/Computing/LALSuite"
       doc_url: "https://lscsoft.docs.ligo.org/lalsuite/lal/"
