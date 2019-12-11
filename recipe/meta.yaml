@@ -113,7 +113,7 @@ outputs:
         - freezegun
         - mock  # [py<33]
         - pathlib  # [py<34]
-        - pytest
+        - pytest >4.0.0a0
       source_files:
         - test/python
       commands:
