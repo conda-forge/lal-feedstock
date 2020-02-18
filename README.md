@@ -3,7 +3,7 @@ About lal
 
 Home: https://wiki.ligo.org/Computing/LALSuite
 
-Package license: GPL-3.0-or-later
+Package license: GPL-2.0-or-later
 
 Feedstock license: BSD 3-Clause
 

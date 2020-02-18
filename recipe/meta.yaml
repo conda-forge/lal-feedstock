@@ -3,7 +3,7 @@
 {% set sha256 = "b01ef7968ec59e3ed74c91ff8fb6a6a12bb37df8555faf1ff3caedd41a561a67" %}
 
 # define build number
-{% set build = 1 %}
+{% set build = 2 %}
 
 # default FFT implememntation to FFTW
 {% set fft_impl = fft_impl or 'fftw' %}
@@ -122,7 +122,7 @@ outputs:
       home: "https://wiki.ligo.org/Computing/LALSuite"
       doc_url: "https://lscsoft.docs.ligo.org/lalsuite/lal/"
       dev_url: "https://git.ligo.org/lscsoft/lalsuite/"
-      license: "GPL-3.0-or-later"
+      license: "GPL-2.0-or-later"
       license_family: "GPL"
       license_file: "COPYING"
       summary: "LSC Algorithm Library"
@@ -134,7 +134,7 @@ about:
   home: "https://wiki.ligo.org/Computing/LALSuite"
   doc_url: "https://lscsoft.docs.ligo.org/lalsuite/lal/"
   dev_url: "https://git.ligo.org/lscsoft/lalsuite/"
-  license: "GPL-3.0-or-later"
+  license: "GPL-2.0-or-later"
   license_family: "GPL"
   license_file: "COPYING"
   summary: "LSC Algorithm Library"
