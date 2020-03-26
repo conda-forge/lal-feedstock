@@ -71,6 +71,8 @@ outputs:
     build:
       error_overdepending: true
       error_overlinking: true
+      ignore_run_exports:
+        - python
       string: "{{ fft_impl }}_py{{ py }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}"
     requirements:
       build:
