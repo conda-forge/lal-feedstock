@@ -3,7 +3,7 @@
 {% set sha256 = "2dddf32cb84a5124381f114ee35f017538e6748827fd7c3eab8f69cc685f5b12" %}
 
 # define build number
-{% set build = 0 %}
+{% set build = 1 %}
 
 # default FFT implememntation to FFTW
 {% set fft_impl = fft_impl or 'fftw' %}
@@ -64,7 +64,7 @@ outputs:
   - name: lal
     build:
       run_exports:
-        - {{ pin_subpackage("lal", max_pin="x.x") }}
+        - {{ pin_subpackage("lal", max_pin="x") }}
 
   - name: python-lal
     script: install-python.sh
