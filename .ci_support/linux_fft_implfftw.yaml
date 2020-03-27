@@ -20,6 +20,9 @@ mkl:
 - '2019'
 numpy:
 - '1.14'
+- '1.14'
+- '1.14'
+- '1.18'
 pin_run_as_build:
   fftw:
     max_pin: x
@@ -34,5 +37,9 @@ python:
 - 3.6.* *_cpython
 - 3.7.* *_cpython
 - 3.8.* *_cpython
+- 3.6.* *_73_pypy
+zip_keys:
+- - numpy
+  - python
 zlib:
 - '1.2'
