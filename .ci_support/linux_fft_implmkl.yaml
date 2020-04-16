@@ -15,7 +15,7 @@ fftw:
 gsl:
 - '2.6'
 hdf5:
-- 1.10.5
+- 1.10.6
 mkl:
 - '2019'
 numpy:
@@ -34,7 +34,5 @@ python:
 - 3.6.* *_cpython
 - 3.7.* *_cpython
 - 3.8.* *_cpython
-python_impl:
-- cpython
 zlib:
 - '1.2'
