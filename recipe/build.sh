@@ -2,6 +2,10 @@
 
 set -e
 
+mkdir -pv ${TMPDIR:=${SRC_DIR}/_tmp}
+export TMPDIR
+export PKG_CONFIG_PATH="${PREFIX}/lib/pkgconfig:${PREFIX}/share/pkgconfig:${PKG_CONFIG_PATH}"
+
 # select FFT implementation
 if [[ "${fft_impl}" == "mkl" ]]; then
     FFT_CONFIG_ARGS="--disable-static --enable-intelfft"

@@ -1,9 +1,10 @@
 {% set name = "lal" %}
 {% set version = "6.22.0" %}
 {% set sha256 = "2dddf32cb84a5124381f114ee35f017538e6748827fd7c3eab8f69cc685f5b12" %}
+{% set posix = 'm2-' if win else '' %}
 
 # define build number
-{% set build = 2 %}
+{% set build = 3 %}
 
 # default FFT implememntation to FFTW
 {% set fft_impl = fft_impl or 'fftw' %}
@@ -30,15 +31,17 @@ build:
     # manually, for now
     - fftw
   number: {{ build }}
-  skip: true  # [win]
   string: "{{ fft_impl }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}"
 
 requirements:
   build:
-    - {{ compiler('c') }}
-    - pkg-config >=0.18.0
-    - make
-    - bc
+    #- bc
+    - {{ compiler('c') }}  # [not win]
+    - {{ compiler('m2w64_c') }}  # [win]
+    - {{ posix }}make
+    - ninja  # [win]
+    - pkg-config >=0.18.0  # [not win]
+    - posix  # [win]
     - swig >=3.0.7
   host:
     - fftw * nompi*  # [fft_impl == "fftw"]
@@ -67,7 +70,8 @@ outputs:
         - {{ pin_subpackage("lal", max_pin="x") }}
 
   - name: python-lal
-    script: install-python.sh
+    script: install-python.sh  # [not win]
+    script: install-python.bat  # [win]
     build:
       error_overdepending: true
       error_overlinking: true
@@ -76,13 +80,15 @@ outputs:
       string: "{{ fft_impl }}_py{{ py }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}"
     requirements:
       build:
-        - {{ compiler('c') }}
-        - make
-        - pkg-config >=0.18.0
+        - {{ compiler('c') }}  # [not win]
+        - {{ compiler('m2w64_c') }}  # [win]
+        - make  # [not win]
+        - pkg-config >=0.18.0  # [win]
         - swig >=3.0.7
       host:
         - gsl
         - {{ pin_subpackage('lal', exact=True) }}
+        - libpython  # [win]
         - mkl-devel {{ mkl }}  # [fft_impl == "mkl"]
         - numpy
         - python
