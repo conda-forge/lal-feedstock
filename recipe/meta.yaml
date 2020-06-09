@@ -39,7 +39,6 @@ requirements:
     - {{ compiler('c') }}  # [not win]
     - {{ compiler('m2w64_c') }}  # [win]
     - {{ posix }}make
-    - ninja  # [win]
     - pkg-config >=0.18.0  # [not win]
     - posix  # [win]
     - swig >=3.0.7
@@ -82,8 +81,8 @@ outputs:
       build:
         - {{ compiler('c') }}  # [not win]
         - {{ compiler('m2w64_c') }}  # [win]
-        - make  # [not win]
-        - pkg-config >=0.18.0  # [win]
+        - {{ posix }}make
+        - pkg-config >=0.18.0  # [not win]
         - swig >=3.0.7
       host:
         - gsl
