@@ -20,21 +20,20 @@ export GSL_LIBS="-L${PREFIX}/lib -lgsl"
 
 # configure only python bindings and pure-python extras
 ./configure \
-	--prefix=$PREFIX \
 	--disable-doxygen \
 	--disable-gcc-flags \
 	--disable-swig-iface \
 	--enable-python \
-	--enable-silent-rules \
 	--enable-swig-python \
+	--prefix=$PREFIX \
 	${FFT_CONFIG_ARGS}
 
 # build
-make -j ${CPU_COUNT} -C swig
-make -j ${CPU_COUNT} -C python
+make -j ${CPU_COUNT} VERBOSE=1 V=1 -C swig
+make -j ${CPU_COUNT} VERBOSE=1 V=1 -C python
 
 # install
-make -j ${CPU_COUNT} -C swig install-exec-am  # swig bindings
-make -j ${CPU_COUNT} -C python install  # pure-python extras
+make -j ${CPU_COUNT} VERBOSE=1 V=1 -C swig install-exec-am  # swig bindings
+make -j ${CPU_COUNT} VERBOSE=1 V=1 -C python install  # pure-python extras
 
 popd

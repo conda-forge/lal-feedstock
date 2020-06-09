@@ -13,25 +13,28 @@ else
     FFT_CONFIG_ARGS=""
 fi
 
+echo ${PREFIX}
+ls ${PREFIX}
+ld --verbose | grep SEARCH_DIR | tr -s ' ;' \\012
+
 # only link libraries we actually use
 export GSL_LIBS="-L${PREFIX}/lib -lgsl"
 
 # configure
 ./configure \
-	--prefix="${PREFIX}" \
 	--disable-gcc-flags \
 	--disable-python \
 	--disable-swig-octave \
 	--disable-swig-python \
-	--enable-silent-rules \
 	--enable-swig-iface \
+	--prefix="${PREFIX}" \
 	${FFT_CONFIG_ARGS}
 
 # build
-make -j ${CPU_COUNT}
+make -j ${CPU_COUNT} VERBOSE=1 V=1
 
 # test
-make -j ${CPU_COUNT} check
+make -j ${CPU_COUNT} VERBOSE=1 V=1 check
 
 # install
-make install
+make -j ${CPU_COUNT} VERBOSE=1 V=1 install
