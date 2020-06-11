@@ -33,8 +33,10 @@ export GSL_LIBS="-L${PREFIX}/lib -lgsl"
 # build
 make -j ${CPU_COUNT} VERBOSE=1 V=1
 
-# test
-make -j ${CPU_COUNT} VERBOSE=1 V=1 check
+# test (no `bc` on windows, so skip for now)
+if [ "$(uname)" == "Linux" -o "$(uname)" == "Darwin" ]; then
+	make -j ${CPU_COUNT} VERBOSE=1 V=1 check
+fi
 
 # install
 make -j ${CPU_COUNT} VERBOSE=1 V=1 install
