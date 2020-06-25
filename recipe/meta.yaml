@@ -1,9 +1,9 @@
 {% set name = "lal" %}
-{% set version = "6.22.0" %}
-{% set sha256 = "2dddf32cb84a5124381f114ee35f017538e6748827fd7c3eab8f69cc685f5b12" %}
+{% set version = "7.0.0" %}
+{% set sha256 = "83a92377285ca0a2e6e48ae5ef8ad96a15dde62dc919f85ae93512dc942f860f" %}
 
 # define build number
-{% set build = 2 %}
+{% set build = 0 %}
 
 # default FFT implememntation to FFTW
 {% set fft_impl = fft_impl or 'fftw' %}
@@ -14,12 +14,12 @@
 {% endif %}
 
 package:
-  name: "{{ name }}"
-  version: "{{ version }}"
+  name: {{ name }}
+  version: {{ version }}
 
 source:
-  url: "http://software.ligo.org/lscsoft/source/lalsuite/{{ name }}-{{ version }}.tar.xz"
-  sha256: "{{ sha256 }}"
+  url: http://software.ligo.org/lscsoft/source/lalsuite/{{ name }}-{{ version }}.tar.xz
+  sha256: {{ sha256 }}
 
 build:
   error_overdepending: true
@@ -31,7 +31,7 @@ build:
     - fftw
   number: {{ build }}
   skip: true  # [win]
-  string: "{{ fft_impl }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}"
+  string: {{ fft_impl }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
 
 requirements:
   build:
@@ -73,7 +73,7 @@ outputs:
       error_overlinking: true
       ignore_run_exports:
         - python
-      string: "{{ fft_impl }}_py{{ py }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}"
+      string: {{ fft_impl }}_py{{ py }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
     requirements:
       build:
         - {{ compiler('c') }}
@@ -121,25 +121,25 @@ outputs:
       commands:
         - pushd test/python; python -m pytest -v; popd
     about:
-      home: "https://wiki.ligo.org/Computing/LALSuite"
-      doc_url: "https://lscsoft.docs.ligo.org/lalsuite/lal/"
-      dev_url: "https://git.ligo.org/lscsoft/lalsuite/"
-      license: "GPL-2.0-or-later"
-      license_family: "GPL"
-      license_file: "COPYING"
-      summary: "LSC Algorithm Library"
+      home: https://wiki.ligo.org/Computing/LALSuite
+      doc_url: https://lscsoft.docs.ligo.org/lalsuite/lal/
+      dev_url: https://git.ligo.org/lscsoft/lalsuite/
+      license: GPL-2.0-or-later
+      license_family: GPL
+      license_file: COPYING
+      summary: LSC Algorithm Library
       description: |
         The LSC Algorithm Library for gravitational wave data analysis.
         This package contains the Python bindings.
 
 about:
-  home: "https://wiki.ligo.org/Computing/LALSuite"
-  doc_url: "https://lscsoft.docs.ligo.org/lalsuite/lal/"
-  dev_url: "https://git.ligo.org/lscsoft/lalsuite/"
-  license: "GPL-2.0-or-later"
-  license_family: "GPL"
-  license_file: "COPYING"
-  summary: "LSC Algorithm Library"
+  home: https://wiki.ligo.org/Computing/LALSuite
+  doc_url: https://lscsoft.docs.ligo.org/lalsuite/lal/
+  dev_url: https://git.ligo.org/lscsoft/lalsuite/
+  license: GPL-2.0-or-later
+  license_family: GPL
+  license_file: COPYING
+  summary: LSC Algorithm Library
   description: |
     The LSC Algorithm Library for gravitational wave data analysis.
     This package contains the shared-object libraries needed to run
