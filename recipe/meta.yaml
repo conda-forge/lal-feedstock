@@ -22,8 +22,6 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  error_overdepending: true
-  error_overlinking: true
   ignore_run_exports:
     - blas
     # run_exports parsing for fftw is broken, so we ignore it
@@ -69,8 +67,6 @@ outputs:
   - name: python-lal
     script: install-python.sh
     build:
-      error_overdepending: true
-      error_overlinking: true
       ignore_run_exports:
         - python
       string: {{ fft_impl }}_py{{ py }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
