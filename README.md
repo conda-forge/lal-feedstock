@@ -5,9 +5,13 @@ Home: https://wiki.ligo.org/Computing/LALSuite
 
 Package license: GPL-2.0-or-later
 
-Feedstock license: BSD 3-Clause
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/lal-feedstock/blob/master/LICENSE.txt)
 
 Summary: LSC Algorithm Library
+
+Development: https://git.ligo.org/lscsoft/lalsuite/
+
+Documentation: https://lscsoft.docs.ligo.org/lalsuite/lal/
 
 The LSC Algorithm Library for gravitational wave data analysis.
 This package contains the shared-object libraries needed to run
@@ -34,49 +38,37 @@ Current build status
         <table>
           <thead><tr><th>Variant</th><th>Status</th></tr></thead>
           <tbody><tr>
-              <td>linux_fft_implfftw</td>
+              <td>linux_64_fft_implfftw</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=3989&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/lal-feedstock?branchName=master&jobName=linux&configuration=linux_fft_implfftw" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/lal-feedstock?branchName=master&jobName=linux&configuration=linux_64_fft_implfftw" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_fft_implmkl</td>
+              <td>linux_64_fft_implmkl</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=3989&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/lal-feedstock?branchName=master&jobName=linux&configuration=linux_fft_implmkl" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/lal-feedstock?branchName=master&jobName=linux&configuration=linux_64_fft_implmkl" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>osx_fft_implfftw</td>
+              <td>osx_64_fft_implfftw</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=3989&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/lal-feedstock?branchName=master&jobName=osx&configuration=osx_fft_implfftw" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/lal-feedstock?branchName=master&jobName=osx&configuration=osx_64_fft_implfftw" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>osx_fft_implmkl</td>
+              <td>osx_64_fft_implmkl</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=3989&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/lal-feedstock?branchName=master&jobName=osx&configuration=osx_fft_implmkl" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/lal-feedstock?branchName=master&jobName=osx&configuration=osx_64_fft_implmkl" alt="variant">
                 </a>
               </td>
             </tr>
           </tbody>
         </table>
       </details>
-    </td>
-  </tr>
-  <tr>
-    <td>Windows</td>
-    <td>
-      <img src="https://img.shields.io/badge/Windows-disabled-lightgrey.svg" alt="Windows disabled">
-    </td>
-  </tr>
-  <tr>
-    <td>Linux_ppc64le</td>
-    <td>
-      <img src="https://img.shields.io/badge/ppc64le-disabled-lightgrey.svg" alt="ppc64le disabled">
     </td>
   </tr>
 </table>

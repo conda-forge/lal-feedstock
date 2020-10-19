@@ -3,7 +3,7 @@
 {% set sha256 = "83a92377285ca0a2e6e48ae5ef8ad96a15dde62dc919f85ae93512dc942f860f" %}
 
 # define build number
-{% set build = 0 %}
+{% set build = 1 %}
 
 # default FFT implememntation to FFTW
 {% set fft_impl = fft_impl or 'fftw' %}
@@ -22,8 +22,6 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  error_overdepending: true
-  error_overlinking: true
   ignore_run_exports:
     - blas
     # run_exports parsing for fftw is broken, so we ignore it
@@ -69,8 +67,6 @@ outputs:
   - name: python-lal
     script: install-python.sh
     build:
-      error_overdepending: true
-      error_overlinking: true
       ignore_run_exports:
         - python
       string: {{ fft_impl }}_py{{ py }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
