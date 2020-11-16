@@ -96,6 +96,7 @@ outputs:
         - {{ pin_compatible('numpy') }}
         - python
         - python-dateutil
+        - python-ligo-lw
         - scipy
         - six
         - zlib  # [linux]
@@ -109,8 +110,6 @@ outputs:
         - lal.utils
       requires:
         - freezegun
-        - mock  # [py<33]
-        - pathlib  # [py<34]
         - pytest >4.0.0a0
       source_files:
         - test/python
