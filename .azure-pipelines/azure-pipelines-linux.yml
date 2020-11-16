@@ -11,11 +11,11 @@ jobs:
       linux_64_fft_implfftw:
         CONFIG: linux_64_fft_implfftw
         UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: condaforge/linux-anvil-comp7
+        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-comp7
       linux_64_fft_implmkl:
         CONFIG: linux_64_fft_implmkl
         UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: condaforge/linux-anvil-comp7
+        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-comp7
   timeoutInMinutes: 360
 
   steps:
