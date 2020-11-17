@@ -1,9 +1,9 @@
 {% set name = "lal" %}
-{% set version = "7.0.0" %}
-{% set sha256 = "83a92377285ca0a2e6e48ae5ef8ad96a15dde62dc919f85ae93512dc942f860f" %}
+{% set version = "7.1.0" %}
+{% set sha256 = "81f1df34b178893483c7ed4262d1ffe98be6110c94f94a4ba8a405f62dd349e9" %}
 
 # define build number
-{% set build = 1 %}
+{% set build = 0 %}
 
 # default FFT implememntation to FFTW
 {% set fft_impl = fft_impl or 'fftw' %}
@@ -96,6 +96,7 @@ outputs:
         - {{ pin_compatible('numpy') }}
         - python
         - python-dateutil
+        - python-ligo-lw
         - scipy
         - six
         - zlib  # [linux]
@@ -109,8 +110,6 @@ outputs:
         - lal.utils
       requires:
         - freezegun
-        - mock  # [py<33]
-        - pathlib  # [py<34]
         - pytest >4.0.0a0
       source_files:
         - test/python
