@@ -1,7 +1,7 @@
 c_compiler:
 - gcc
 c_compiler_version:
-- '7'
+- '9'
 cdt_name:
 - cos6
 channel_sources:
@@ -22,6 +22,7 @@ mkl:
 - '2019'
 numpy:
 - '1.16'
+- '1.19'
 - '1.16'
 - '1.16'
 - '1.19'
@@ -37,6 +38,7 @@ pin_run_as_build:
     max_pin: x.x
 python:
 - 3.6.* *_cpython
+- 3.7.* *_73_pypy
 - 3.7.* *_cpython
 - 3.8.* *_cpython
 - 3.9.* *_cpython
