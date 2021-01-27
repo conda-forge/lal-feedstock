@@ -1,6 +1,6 @@
 {% set name = "lal" %}
-{% set version = "7.1.0" %}
-{% set sha256 = "81f1df34b178893483c7ed4262d1ffe98be6110c94f94a4ba8a405f62dd349e9" %}
+{% set version = "7.1.1" %}
+{% set sha256 = "97905d5da27c62c7e153db49825e23cafd53fd295659313829dd6110d820b316" %}
 
 # define build number
 {% set build = 0 %}
