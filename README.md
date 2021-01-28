@@ -7,17 +7,15 @@ Package license: GPL-2.0-or-later
 
 Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/lal-feedstock/blob/master/LICENSE.txt)
 
-Summary: LSC Algorithm Library
+Summary: LSC Algorithm Library shared object libraries
 
 Development: https://git.ligo.org/lscsoft/lalsuite/
 
 Documentation: https://lscsoft.docs.ligo.org/lalsuite/lal/
 
 The LSC Algorithm Library for gravitational wave data analysis.
-This package contains the shared-object libraries needed to run
-applications that use the LAL library.  If you want to install
-the Python bindings, please install the associated python-lal
-package.
+This package contains the shared object libraries need to build
+applications that use LAL.
 
 
 Current build status
@@ -79,6 +77,7 @@ Current release info
 | Name | Downloads | Version | Platforms |
 | --- | --- | --- | --- |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-lal-green.svg)](https://anaconda.org/conda-forge/lal) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/lal.svg)](https://anaconda.org/conda-forge/lal) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/lal.svg)](https://anaconda.org/conda-forge/lal) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/lal.svg)](https://anaconda.org/conda-forge/lal) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-liblal-green.svg)](https://anaconda.org/conda-forge/liblal) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/liblal.svg)](https://anaconda.org/conda-forge/liblal) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/liblal.svg)](https://anaconda.org/conda-forge/liblal) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/liblal.svg)](https://anaconda.org/conda-forge/liblal) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-python--lal-green.svg)](https://anaconda.org/conda-forge/python-lal) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/python-lal.svg)](https://anaconda.org/conda-forge/python-lal) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/python-lal.svg)](https://anaconda.org/conda-forge/python-lal) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/python-lal.svg)](https://anaconda.org/conda-forge/python-lal) |
 
 Installing lal
@@ -90,10 +89,10 @@ Installing `lal` from the `conda-forge` channel can be achieved by adding `conda
 conda config --add channels conda-forge
 ```
 
-Once the `conda-forge` channel has been enabled, `lal, python-lal` can be installed with:
+Once the `conda-forge` channel has been enabled, `lal, liblal, python-lal` can be installed with:
 
 ```
-conda install lal python-lal
+conda install lal liblal python-lal
 ```
 
 It is possible to list all of the versions of `lal` available on your platform with:
