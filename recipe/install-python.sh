@@ -4,8 +4,12 @@
 # for a LALSuite subpackage.
 #
 
-set -e
-pushd ${SRC_DIR}
+set -ex
+
+# build python in a sub-directory using a copy of the C build
+_builddir="_build${PY_VER}"
+cp -r _build ${_builddir}
+cd ${_builddir}
 
 # if we're using MKL, the C library will have been built with
 # --enable-intelfft, so we have to use that here as well
@@ -19,22 +23,20 @@ fi
 export GSL_LIBS="-L${PREFIX}/lib -lgsl"
 
 # configure only python bindings and pure-python extras
-./configure \
-	--prefix=$PREFIX \
+${SRC_DIR}/configure \
 	--disable-doxygen \
 	--disable-gcc-flags \
 	--disable-swig-iface \
 	--enable-python \
-	--enable-silent-rules \
 	--enable-swig-python \
-	${FFT_CONFIG_ARGS}
+	--prefix=$PREFIX \
+	${FFT_CONFIG_ARGS} \
+;
 
 # build
-make -j ${CPU_COUNT} -C swig
-make -j ${CPU_COUNT} -C python
+make -j ${CPU_COUNT} V=1 VERBOSE=1 -C swig
+make -j ${CPU_COUNT} V=1 VERBOSE=1 -C python
 
 # install
-make -j ${CPU_COUNT} -C swig install-exec-am  # swig bindings
-make -j ${CPU_COUNT} -C python install  # pure-python extras
-
-popd
+make -j ${CPU_COUNT} V=1 VERBOSE=1 -C swig install-exec  # swig bindings
+make -j ${CPU_COUNT} V=1 VERBOSE=1 -C python install  # pure-python extras
