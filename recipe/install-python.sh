@@ -34,8 +34,8 @@ ${SRC_DIR}/configure \
 ;
 
 # patch out dependency_libs from libtool archive to prevent overlinking
-sed -i '/^dependency_libs/d' lib/liblal.la
-sed -i '/^dependency_libs/d' lib/support/liblalsupport.la
+sed -i.tmp '/^dependency_libs/d' lib/liblal.la
+sed -i.tmp '/^dependency_libs/d' lib/support/liblalsupport.la
 
 # build
 make -j ${CPU_COUNT} V=1 VERBOSE=1 -C swig LIBS=""
