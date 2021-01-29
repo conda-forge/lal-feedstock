@@ -3,7 +3,7 @@
 {% set sha256 = "97905d5da27c62c7e153db49825e23cafd53fd295659313829dd6110d820b316" %}
 
 # define build number
-{% set build = 0 %}
+{% set build = 1 %}
 
 # default FFT implememntation to FFTW
 {% set fft_impl = fft_impl or 'fftw' %}
@@ -105,29 +105,24 @@ outputs:
         - pkg-config >=0.18.0
         - swig >={{ swig_version }}
       host:
-        - gsl
         - {{ pin_subpackage('liblal', exact=True) }}
-        - mkl-devel {{ mkl }}  # [fft_impl == "mkl"]
         - numpy
         - python
+        # this is here in case the solver gets confused during conda-build
+        - mkl {{ mkl }}  # [fft_impl == "mkl"]
       run:
         # NOTE: on linux, python-lal links the LAL dependencies
         #       as well so we have to list them here. why this
         #       doesn't happen on osx, I'm not sure.
-        - fftw  # [linux and fft_impl == "fftw"]
-        - gsl
-        - hdf5  # [linux]
         - {{ pin_subpackage('liblal', exact=True) }}
         - ligo-segments
         - lscsoft-glue >=1.54.1
-        - mkl  # [fft_impl == "mkl"]
         - {{ pin_compatible('numpy') }}
         - python
         - python-dateutil
         - python-ligo-lw
         - scipy
         - six
-        - zlib  # [linux]
     test:
       requires:
         - freezegun
