@@ -95,6 +95,7 @@ outputs:
     script: install-python.sh
     build:
       ignore_run_exports:
+        - mkl
         # ignore run_exports from python's recipe
         - python
       string: {{ fft_impl }}_py{{ py }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
@@ -106,10 +107,9 @@ outputs:
         - swig >={{ swig_version }}
       host:
         - {{ pin_subpackage('liblal', exact=True) }}
+        - mkl-devel {{ mkl }}  # [fft_impl == "mkl"]
         - numpy
         - python
-        # this is here in case the solver gets confused during conda-build
-        - mkl {{ mkl }}  # [fft_impl == "mkl"]
       run:
         # NOTE: on linux, python-lal links the LAL dependencies
         #       as well so we have to list them here. why this
