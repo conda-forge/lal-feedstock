@@ -3,7 +3,7 @@
 {% set sha256 = "97905d5da27c62c7e153db49825e23cafd53fd295659313829dd6110d820b316" %}
 
 # define build number
-{% set build = 2 %}
+{% set build = 3 %}
 
 # default FFT implememntation to FFTW
 {% set fft_impl = fft_impl or 'fftw' %}
@@ -71,6 +71,11 @@ outputs:
         - gsl
         - hdf5
         - zlib
+      run_constrained:
+        # 7.1.1 is the version where the packages were restructured
+        - lal >=7.1.1
+        - python-lal >=7.1.1
+
     about:
       home: https://wiki.ligo.org/Computing/LALSuite
       doc_url: https://lscsoft.docs.ligo.org/lalsuite/lal/
