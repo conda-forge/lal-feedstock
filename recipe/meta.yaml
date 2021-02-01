@@ -3,7 +3,7 @@
 {% set sha256 = "97905d5da27c62c7e153db49825e23cafd53fd295659313829dd6110d820b316" %}
 
 # define build number
-{% set build = 1 %}
+{% set build = 2 %}
 
 # default FFT implememntation to FFTW
 {% set fft_impl = fft_impl or 'fftw' %}
@@ -15,7 +15,6 @@
 
 # dependency versions
 {% set swig_version = "3.0.10" %}
-{% set numpy_version = "1.7" %}
 
 package:
   name: {{ name }}-split
@@ -118,6 +117,8 @@ outputs:
         - ligo-segments
         - lscsoft-glue >=1.54.1
         - {{ pin_compatible('numpy') }}
+        # swig bindings cause segmentation fault
+        - numpy <1.20.0a0
         - python
         - python-dateutil
         - python-ligo-lw
