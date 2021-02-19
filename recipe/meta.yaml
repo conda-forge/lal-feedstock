@@ -92,9 +92,26 @@ outputs:
       requires:
         - pkg-config
       commands:
+        # check library
+        - test -f ${PREFIX}/lib/liblal${SHLIB_EXT}  # [unix]
+        - test -f ${PREFIX}/lib/liblalsupport${SHLIB_EXT}  # [unix]
+        # check activate variables
+        - test "${LAL_DATADIR}" = "${PREFIX}/share/lal"  # [unix]
+        # check pkg-config
         - pkg-config --print-errors --exact-version "${PKG_VERSION}" lal
         - pkg-config --print-errors --exact-version "${PKG_VERSION}" lalsupport
-        - test "${LAL_DATADIR}" = "${PREFIX}/share/lal"
+    about:
+      home: https://wiki.ligo.org/Computing/LALSuite
+      doc_url: https://lscsoft.docs.ligo.org/lalsuite/lal/
+      dev_url: https://git.ligo.org/lscsoft/lalsuite.git
+      license: GPL-2.0-or-later
+      license_family: GPL
+      license_file: COPYING
+      summary: LSC Algorithm Library shared object libraries
+      description: |
+        The LSC Algorithm Library for gravitational wave data analysis.
+        This package contains the shared-object libraries needed to run
+        applications that use the LAL library.
 
   - name: python-lal
     script: install-python.sh
@@ -153,7 +170,12 @@ outputs:
       summary: LSC Algorithm Library Python bindings
       description: |
         The LSC Algorithm Library for gravitational wave data analysis.
-        This package contains the Python bindings.
+        This package contains the Python bindings of the LAL C libraries
+        and additional Python modules.
+
+        Note: this package only provides the importable Python libraries.
+        All command-line interfaces, scripts, and executables are
+        part of the [`lalsimulation`](/conda-forge/lalsimulation) package.
 
   - name: lal
     script: install-bin.sh
@@ -182,10 +204,9 @@ outputs:
       license: GPL-2.0-or-later
       license_family: GPL
       license_file: COPYING
-      summary: LSC Algorithm Library runtime tools
+      summary: LSC Algorithm Library
       description: |
         The LSC Algorithm Library for gravitational wave data analysis.
-        This package contains the runtime tools.
     test:
       commands:
         - lal_version --verbose
