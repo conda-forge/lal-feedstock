@@ -175,7 +175,7 @@ outputs:
 
         Note: this package only provides the importable Python libraries.
         All command-line interfaces, scripts, and executables are
-        part of the [`lalsimulation`](/conda-forge/lalsimulation) package.
+        part of the `lal` package.
 
   - name: lal
     script: install-bin.sh
