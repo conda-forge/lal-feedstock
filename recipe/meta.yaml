@@ -92,8 +92,9 @@ outputs:
       requires:
         - pkg-config
       commands:
-        - test $(pkg-config --modversion --print-errors lal) == "${PKG_VERSION}"
-        - test $(pkg-config --modversion --print-errors lalsupport) == "${PKG_VERSION}"
+        - pkg-config --print-errors --exact-version "${PKG_VERSION}" lal
+        - pkg-config --print-errors --exact-version "${PKG_VERSION}" lalsupport
+        - test "${LAL_DATADIR}" = "${PREFIX}/share/lal"
 
   - name: python-lal
     script: install-python.sh
@@ -122,8 +123,6 @@ outputs:
         - ligo-segments
         - lscsoft-glue >=1.54.1
         - {{ pin_compatible('numpy') }}
-        # swig bindings cause segmentation fault
-        - numpy <1.20.0a0
         - python
         - python-dateutil
         - python-ligo-lw
@@ -136,7 +135,7 @@ outputs:
       source_files:
         - test/python
       commands:
-        - python -m pytest -rs -v test/python
+        - python -m pytest -ra -v test/python
       imports:
         - lal
         - lal.antenna
@@ -165,6 +164,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('c') }}
+        - help2man >=1.37
         - make
       host:
         - {{ pin_subpackage('liblal', exact=True) }}
