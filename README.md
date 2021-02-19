@@ -9,13 +9,13 @@ Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/lal-feedstock/b
 
 Summary: LSC Algorithm Library shared object libraries
 
-Development: https://git.ligo.org/lscsoft/lalsuite/
+Development: https://git.ligo.org/lscsoft/lalsuite.git
 
 Documentation: https://lscsoft.docs.ligo.org/lalsuite/lal/
 
 The LSC Algorithm Library for gravitational wave data analysis.
-This package contains the shared object libraries need to build
-applications that use LAL.
+This package contains the shared-object libraries needed to run
+applications that use the LAL library.
 
 
 Current build status
