@@ -138,7 +138,6 @@ outputs:
         #       doesn't happen on osx, I'm not sure.
         - {{ pin_subpackage('liblal', exact=True) }}
         - ligo-segments
-        - lscsoft-glue >=1.54.1
         - {{ pin_compatible('numpy') }}
         - python
         - python-dateutil
@@ -148,6 +147,7 @@ outputs:
     test:
       requires:
         - freezegun
+        - lscsoft-glue
         - pytest >=4.0.0a0
       source_files:
         - test/python
