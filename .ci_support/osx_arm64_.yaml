@@ -1,0 +1,43 @@
+MACOSX_DEPLOYMENT_TARGET:
+- '11.0'
+c_compiler:
+- clang
+c_compiler_version:
+- '11'
+channel_sources:
+- conda-forge
+channel_targets:
+- conda-forge main
+fft_impl:
+- fftw
+fftw:
+- '3'
+gsl:
+- '2.7'
+hdf5:
+- 1.10.6
+macos_machine:
+- arm64-apple-darwin20.0.0
+mkl:
+- '2021'
+numpy:
+- '1.19'
+- '1.19'
+pin_run_as_build:
+  fftw:
+    max_pin: x
+  python:
+    min_pin: x.x
+    max_pin: x.x
+  zlib:
+    max_pin: x.x
+python:
+- 3.8.* *_cpython
+- 3.9.* *_cpython
+target_platform:
+- osx-arm64
+zip_keys:
+- - python
+  - numpy
+zlib:
+- '1.2'
