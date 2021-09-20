@@ -129,6 +129,10 @@ outputs:
         - make
         - pkg-config >=0.18.0
         - swig >={{ swig_version }}
+        # extras for cross-compilation:
+        - cross-python_{{ target_platform }}  # [build_platform != target_platform]
+        - numpy                               # [build_platform != target_platform]
+        - python                              # [build_platform != target_platform]
       host:
         - {{ pin_subpackage('liblal', exact=True) }}
         - mkl-devel {{ mkl }}  # [fft_impl == "mkl"]
@@ -190,6 +194,7 @@ outputs:
         - {{ compiler('c') }}
         - help2man >=1.37
         - make
+        - sed
       host:
         - {{ pin_subpackage('liblal', exact=True) }}
         # this is here in case the solver gets confused during conda-build
