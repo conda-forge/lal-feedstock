@@ -25,6 +25,8 @@ source:
   sha256: {{ sha256 }}
   patches:
     - no-gsl_version-check.patch  # [build_platform != target_platform]
+    # https://git.ligo.org/lscsoft/lalsuite/-/merge_requests/1678
+    - h5_use_110_api.patch
 
 build:
   ignore_run_exports:
