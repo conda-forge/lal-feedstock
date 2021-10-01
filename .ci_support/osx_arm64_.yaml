@@ -15,7 +15,7 @@ fftw:
 gsl:
 - '2.7'
 hdf5:
-- 1.10.6
+- 1.12.1
 macos_machine:
 - arm64-apple-darwin20.0.0
 mkl:
@@ -23,6 +23,8 @@ mkl:
 numpy:
 - '1.19'
 - '1.19'
+openssl:
+- 1.1.1
 pin_run_as_build:
   fftw:
     max_pin: x

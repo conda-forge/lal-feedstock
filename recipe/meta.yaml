@@ -3,7 +3,7 @@
 {% set sha256 = "8f83b419d7a824971dda95f2c493682c129a75127a87f0c9cec06af943693393" %}
 
 # define build number
-{% set build = 1 %}
+{% set build = 2 %}
 
 # default FFT implememntation to FFTW
 {% set fft_impl = fft_impl or 'fftw' %}
@@ -121,8 +121,10 @@ outputs:
     script: install-python.sh
     build:
       ignore_run_exports:
+        # things we declare to help the solver, but don't actually need
         - mkl
-        # ignore run_exports from python's recipe
+        - openssl
+        # we don't link directly against libpython
         - python
       string: {{ fft_impl }}_py{{ py }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
     requirements:
@@ -137,9 +139,11 @@ outputs:
         - python                              # [build_platform != target_platform]
       host:
         - {{ pin_subpackage('liblal', exact=True) }}
-        - mkl-devel {{ mkl }}  # [fft_impl == "mkl"]
         - numpy
         - python
+        # extras to help the solver:
+        - mkl-devel {{ mkl }}  # [fft_impl == "mkl"]
+        - openssl
       run:
         # NOTE: on linux, python-lal links the LAL dependencies
         #       as well so we have to list them here. why this
@@ -189,6 +193,10 @@ outputs:
     script: install-bin.sh
     build:
       ignore_run_exports:
+        # things we declare to help the solver, but don't actually need
+        - mkl
+        - openssl
+        # we don't link directly against libpython
         - python
       string: {{ fft_impl }}_py{{ py }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
     requirements:
@@ -199,9 +207,10 @@ outputs:
         - sed
       host:
         - {{ pin_subpackage('liblal', exact=True) }}
-        # this is here in case the solver gets confused during conda-build
-        - mkl {{ mkl }}  # [fft_impl == "mkl"]
         - python
+        # extras to help the solver:
+        - mkl {{ mkl }}  # [fft_impl == "mkl"]
+        - openssl
       run:
         - {{ pin_subpackage('liblal', exact=True) }}
         - python
