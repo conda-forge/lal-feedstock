@@ -160,17 +160,17 @@ outputs:
         - freezegun
         - lscsoft-glue  # [x86_64]
         - pytest >=4.0
-        - python-ligo-lw  # [x86_64]
+        - python-ligo-lw  # [x86_64 and py<=39]
       source_files:
         - test/python
       commands:
-        - python -m pytest -ra -v test/python  # [x86_64]
+        - python -m pytest -ra -v test/python  # [x86_64 and py<=39]
       imports:
         - lal
         - lal.antenna
         - lal.gpstime
-        - lal.rate  # [x86_64]
-        - lal.series  # [x86_64]
+        - lal.rate  # [x86_64 and py<=39]
+        - lal.series  # [x86_64 and py<=39]
         - lal.utils
     about:
       home: https://wiki.ligo.org/Computing/LALSuite
