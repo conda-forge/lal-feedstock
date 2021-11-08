@@ -23,7 +23,6 @@ mkl:
 numpy:
 - '1.18'
 - '1.18'
-- '1.18'
 - '1.19'
 openssl:
 - 1.1.1
@@ -33,13 +32,14 @@ pin_run_as_build:
   python:
     min_pin: x.x
     max_pin: x.x
-  zlib:
-    max_pin: x.x
 python:
-- 3.6.* *_cpython
 - 3.7.* *_cpython
 - 3.8.* *_cpython
 - 3.9.* *_cpython
+python_impl:
+- cpython
+- cpython
+- cpython
 target_platform:
 - linux-64
 zip_keys:
@@ -47,5 +47,4 @@ zip_keys:
   - docker_image
 - - python
   - numpy
-zlib:
-- '1.2'
+  - python_impl
