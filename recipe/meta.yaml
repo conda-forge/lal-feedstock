@@ -3,7 +3,7 @@
 {% set sha256 = "8f83b419d7a824971dda95f2c493682c129a75127a87f0c9cec06af943693393" %}
 
 # define build number
-{% set build = 3 %}
+{% set build = 4 %}
 
 # default FFT implememntation to FFTW
 {% set fft_impl = fft_impl or 'fftw' %}
@@ -15,6 +15,10 @@
 
 # dependency versions
 {% set swig_version = "3.0.10" %}
+
+# avoid circular imports that would break migrations
+{% set migrating = False %}
+{% set migrating = True %}  # [not x86_64 or python_impl != 'cpython' or py >= 310]
 
 package:
   name: {{ name }}-split
@@ -50,7 +54,7 @@ requirements:
     - gsl
     - hdf5
     - mkl-devel {{ mkl }}  # [fft_impl == "mkl"]
-    - zlib
+    - libzlib
 
 outputs:
   - name: liblal
@@ -69,12 +73,12 @@ outputs:
         - gsl
         - hdf5
         - mkl-devel {{ mkl }}  # [fft_impl == "mkl"]
-        - zlib
+        - libzlib
       run:
         - fftw  # [fft_impl == "fftw"]
         - gsl
         - hdf5
-        - zlib
+        - libzlib
       run_constrained:
         # 7.1.1 is the version where the packages were restructured
         - lal >=7.1.1
@@ -158,20 +162,18 @@ outputs:
     test:
       requires:
         - freezegun
-        - lscsoft-glue  # [x86_64]
+        - lscsoft-glue
         - pytest >=4.0
-        - python-ligo-lw  # [x86_64]
+        {% if not migrating %}
+        - python-ligo-lw
+        {% endif %}
       source_files:
         - test/python
       commands:
-        - python -m pytest -ra -v test/python  # [x86_64]
-      imports:
-        - lal
-        - lal.antenna
-        - lal.gpstime
-        - lal.rate  # [x86_64]
-        - lal.series  # [x86_64]
-        - lal.utils
+        - python -m pytest -ra -v test/python {% if migrating -%}
+              --ignore test/python/test_rate.py
+              -k 'not lal.rate and not lal.series'
+        {%- endif %}
     about:
       home: https://wiki.ligo.org/Computing/LALSuite
       doc_url: https://lscsoft.docs.ligo.org/lalsuite/lal/
