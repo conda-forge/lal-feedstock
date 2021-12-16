@@ -1,8 +1,8 @@
 {% set name = "lal" %}
-{% set version = "7.1.4" %}
+{% set version = "7.1.5" %}
 
 # define build number
-{% set build = 1 %}
+{% set build = 0 %}
 
 # default FFT implememntation to FFTW
 {% set fft_impl = fft_impl or 'fftw' %}
@@ -17,7 +17,7 @@
 
 # avoid circular imports that would break migrations
 {% set migrating = False %}
-{% set migrating = True %}  # [not x86_64 or python_impl != 'cpython' or py >= 310]
+{% set migrating = True %}  # [not x86_64 or python_impl != 'cpython' or py >= 311]
 
 package:
   name: {{ name }}-split
@@ -25,7 +25,7 @@ package:
 
 source:
   url: http://software.ligo.org/lscsoft/source/lalsuite/{{ name }}-{{ version }}.tar.xz
-  sha256: fb1f042fe7db3edd5eef3f74de53b384373fa35f80b2609ac387c9686525ca14
+  sha256: 058049e95d246c72d350d2305c339e830fa8f996a0682532dfd54021112f8100
 
 build:
   ignore_run_exports:
@@ -41,7 +41,6 @@ requirements:
     - {{ compiler('c') }}
     - pkg-config >=0.18.0
     - make
-    - help2man >=1.37
     - bc
     - swig >={{ swig_version }}
   host:
@@ -62,13 +61,13 @@ outputs:
       build:
         - {{ compiler('c') }}
         - make  # [not win]
-        - swig >=3.0.9
+        - swig >={{ swig_version }}
       host:
         - fftw * nompi*  # [fft_impl == "fftw"]
         - gsl
         - hdf5
         - mkl-devel {{ mkl }}  # [fft_impl == "mkl"]
-        - libzlib
+        - zlib
       run:
         - fftw  # [fft_impl == "fftw"]
         - gsl
@@ -122,7 +121,6 @@ outputs:
       ignore_run_exports:
         # things we declare to help the solver, but don't actually need
         - mkl
-        - openssl
         # we don't link directly against libpython
         - python
       string: {{ fft_impl }}_py{{ py }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
@@ -142,7 +140,6 @@ outputs:
         - python
         # extras to help the solver:
         - mkl-devel {{ mkl }}  # [fft_impl == "mkl"]
-        - openssl
       run:
         # NOTE: on linux, python-lal links the LAL dependencies
         #       as well so we have to list them here. why this
@@ -192,7 +189,6 @@ outputs:
       ignore_run_exports:
         # things we declare to help the solver, but don't actually need
         - mkl
-        - openssl
         # we don't link directly against libpython
         - python
       string: {{ fft_impl }}_py{{ py }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
@@ -207,7 +203,6 @@ outputs:
         - python
         # extras to help the solver:
         - mkl {{ mkl }}  # [fft_impl == "mkl"]
-        - openssl
       run:
         - {{ pin_subpackage('liblal', exact=True) }}
         - python
