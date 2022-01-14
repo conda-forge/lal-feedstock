@@ -1,5 +1,5 @@
 {% set name = "lal" %}
-{% set version = "7.1.5" %}
+{% set version = "7.1.6" %}
 
 # define build number
 {% set build = 0 %}
@@ -24,8 +24,8 @@ package:
   version: {{ version }}
 
 source:
-  url: http://software.ligo.org/lscsoft/source/lalsuite/{{ name }}-{{ version }}.tar.xz
-  sha256: 058049e95d246c72d350d2305c339e830fa8f996a0682532dfd54021112f8100
+  url: https://software.ligo.org/lscsoft/source/lalsuite/{{ name }}-{{ version }}.tar.xz
+  sha256: 72d359a654e377c0d3cd3784580e36674b3f8cf360154e273062a5463ed7cbe5
 
 build:
   ignore_run_exports:
