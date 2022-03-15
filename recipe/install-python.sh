@@ -11,6 +11,12 @@ _builddir="_build${PY_VER}"
 cp -r _build ${_builddir}
 cd ${_builddir}
 
+# replace package name in debug-prefix-map with source name
+export CFLAGS=$(
+   echo ${CFLAGS:-} |
+   sed -E 's|'\/usr\/local\/src\/conda\/${PKG_NAME}'|/usr/local/src/conda/lal|g'
+)
+
 # if we're using MKL, the C library will have been built with
 # --enable-intelfft, so we have to use that here as well
 if [[ "${fft_impl}" == "mkl" ]]; then
