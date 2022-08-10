@@ -205,7 +205,6 @@ outputs:
         - ligo-segments
         - python
         - {{ pin_subpackage('python-lal', exact=True) }}
-        - python-ligo-lw
         # extras to help the solver:
         - mkl {{ mkl }}  # [fft_impl == "mkl"]
       run:
