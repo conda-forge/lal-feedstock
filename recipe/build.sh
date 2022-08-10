@@ -40,6 +40,6 @@ ${SRC_DIR}/configure \
 make -j ${CPU_COUNT} V=1 VERBOSE=1 HDF5_LIBS="${HDF5_LIBS}"
 
 # test
-if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" ]]; then
+if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" || "${CROSSCOMPILING_EMULATOR}" != "" ]]; then
 	make -j ${CPU_COUNT} V=1 VERBOSE=1 check
 fi

@@ -47,6 +47,11 @@ sed -i.tmp '/^dependency_libs/d' lib/support/liblalsupport.la
 make -j ${CPU_COUNT} V=1 VERBOSE=1 -C swig LIBS=""
 make -j ${CPU_COUNT} V=1 VERBOSE=1 -C python LIBS=""
 
+# test
+if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" || "${CROSSCOMPILING_EMULATOR}" != "" ]]; then
+	make -j ${CPU_COUNT} V=1 VERBOSE=1 check -C swig
+fi
+
 # install
 make -j ${CPU_COUNT} V=1 VERBOSE=1 -C swig install-exec  # swig bindings
 make -j ${CPU_COUNT} V=1 VERBOSE=1 -C python install  # pure-python extras
