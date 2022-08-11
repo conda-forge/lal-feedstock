@@ -26,6 +26,9 @@ package:
 source:
   url: https://software.igwn.org/sources/source/lalsuite/{{ name }}-{{ version }}.tar.xz
   sha256: 7858e07148491b6d6b9fb727722800a5efd24ba30cff1b1a1e475804517583e4
+  patches:
+    # https://git.ligo.org/lscsoft/lalsuite/-/issues/580
+    - no-test_tconvert.patch  # [osx]
 
 build:
   ignore_run_exports:

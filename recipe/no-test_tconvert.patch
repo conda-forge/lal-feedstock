@@ -1,0 +1,11 @@
+--- bin/Makefile.in	2022-08-06 00:18:14.989787911 +0100
++++ bin/Makefile.in	2022-08-11 16:33:29.544740000 +0100
+@@ -729,7 +729,7 @@
+ test_programs = lal_simd_detect lal_version
+
+ # Add shell, Python, etc. test scripts to this variable
+-test_scripts = test_cache test_tconvert $(am__append_7)
++test_scripts = test_cache $(am__append_7)
+
+ # Add any helper programs required by tests to this variable
+ test_helpers =
