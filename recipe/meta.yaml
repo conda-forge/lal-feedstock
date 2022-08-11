@@ -227,8 +227,8 @@ outputs:
         The LSC Algorithm Library for gravitational wave data analysis.
     test:
       commands:
-        - lal_fftw_wisdom --help
-        - lal_fftwf_wisdom --help
+        - lal_fftw_wisdom --help  # [fft_impl == "fftw"]
+        - lal_fftwf_wisdom --help  # [fft_impl == "fftw"]
         - lal_path2cache <<< A-B-0-1.gwf
         - lal_searchsum2cache --help
         - lal_simd_detect
