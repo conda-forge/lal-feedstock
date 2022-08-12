@@ -2,6 +2,9 @@
 
 set -e
 
+# macros
+_make="make -j ${CPU_COUNT} V=1 VERBOSE=1"
+
 # use out-of-tree build
 mkdir -pv _build
 cd _build
@@ -37,9 +40,9 @@ ${SRC_DIR}/configure \
 ;
 
 # build
-make -j ${CPU_COUNT} V=1 VERBOSE=1 HDF5_LIBS="${HDF5_LIBS}"
+${_make} HDF5_LIBS="${HDF5_LIBS}"
 
 # test
-if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" ]]; then
-	make -j ${CPU_COUNT} V=1 VERBOSE=1 check
+if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" || "${CROSSCOMPILING_EMULATOR}" != "" ]]; then
+	${_make} check
 fi

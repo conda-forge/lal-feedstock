@@ -6,6 +6,9 @@
 
 set -ex
 
+# macros
+_make="make -j ${CPU_COUNT} V=1 VERBOSE=1"
+
 # build python in a sub-directory using a copy of the C build
 _builddir="_build${PY_VER}"
 cp -r _build ${_builddir}
@@ -44,9 +47,14 @@ sed -i.tmp '/^dependency_libs/d' lib/liblal.la
 sed -i.tmp '/^dependency_libs/d' lib/support/liblalsupport.la
 
 # build
-make -j ${CPU_COUNT} V=1 VERBOSE=1 -C swig LIBS=""
-make -j ${CPU_COUNT} V=1 VERBOSE=1 -C python LIBS=""
+${_make} -C swig LIBS=""
+${_make} -C python LIBS=""
+
+# test
+if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" || "${CROSSCOMPILING_EMULATOR}" != "" ]]; then
+	${_make} check -C swig
+fi
 
 # install
-make -j ${CPU_COUNT} V=1 VERBOSE=1 -C swig install-exec  # swig bindings
-make -j ${CPU_COUNT} V=1 VERBOSE=1 -C python install  # pure-python extras
+${_make} -C swig install-exec  # swig bindings
+${_make} -C python install  # pure-python extras

@@ -1,8 +1,8 @@
 {% set name = "lal" %}
-{% set version = "7.1.7" %}
+{% set version = "7.2.0" %}
 
 # define build number
-{% set build = 1 %}
+{% set build = 0 %}
 
 # default FFT implememntation to FFTW
 {% set fft_impl = fft_impl or 'fftw' %}
@@ -24,8 +24,13 @@ package:
   version: {{ version }}
 
 source:
-  url: https://software.ligo.org/lscsoft/source/lalsuite/{{ name }}-{{ version }}.tar.xz
-  sha256: e1ad867e525e7f870d1a1fd62aa0dee1918905af36d2a9b9191ed5bee045235c
+  url: https://software.igwn.org/sources/source/lalsuite/{{ name }}-{{ version }}.tar.xz
+  sha256: 7858e07148491b6d6b9fb727722800a5efd24ba30cff1b1a1e475804517583e4
+  patches:
+    # https://git.ligo.org/lscsoft/lalsuite/-/issues/580
+    - no-test_tconvert.patch  # [osx]
+    # disable CHAR in ValueTest, see https://git.ligo.org/lscsoft/lalsuite/-/issues/580
+    - ValueTest-no-char.patch  # [linux and not x86_64]
 
 build:
   ignore_run_exports:
@@ -97,8 +102,6 @@ outputs:
         # check library
         - test -f ${PREFIX}/lib/liblal${SHLIB_EXT}  # [unix]
         - test -f ${PREFIX}/lib/liblalsupport${SHLIB_EXT}  # [unix]
-        # check activate variables
-        - test "${LAL_DATADIR}" = "${PREFIX}/share/lal"  # [unix]
         # check pkg-config
         - pkg-config --print-errors --exact-version "${PKG_VERSION}" lal
         - pkg-config --print-errors --exact-version "${PKG_VERSION}" lalsupport
@@ -121,7 +124,8 @@ outputs:
       ignore_run_exports:
         # things we declare to help the solver, but don't actually need
         - mkl
-        # we don't link directly against libpython
+        # we don't link directly against libpython or numpy
+        - numpy
         - python
       string: {{ fft_impl }}_py{{ py }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
     requirements:
@@ -138,6 +142,7 @@ outputs:
         - {{ pin_subpackage('liblal', exact=True) }}
         - numpy
         - python
+        - six
         # extras to help the solver:
         - mkl-devel {{ mkl }}  # [fft_impl == "mkl"]
       run:
@@ -189,7 +194,8 @@ outputs:
       ignore_run_exports:
         # things we declare to help the solver, but don't actually need
         - mkl
-        # we don't link directly against libpython
+        # we don't link directly against libpython or numpy
+        - numpy
         - python
       string: {{ fft_impl }}_py{{ py }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
     requirements:
@@ -199,14 +205,21 @@ outputs:
         - make
         - sed
       host:
+        - fftw  # [fft_impl == "fftw"]
         - {{ pin_subpackage('liblal', exact=True) }}
+        - ligo-segments
         - python
+        - {{ pin_subpackage('python-lal', exact=True) }}
         # extras to help the solver:
         - mkl {{ mkl }}  # [fft_impl == "mkl"]
       run:
+        - fftw  # [fft_impl == "fftw"]
         - {{ pin_subpackage('liblal', exact=True) }}
+        - ligo-segments
+        - numpy
         - python
         - {{ pin_subpackage('python-lal', exact=True) }}
+        - python-ligo-lw
     about:
       home: https://wiki.ligo.org/Computing/LALSuite
       doc_url: https://lscsoft.docs.ligo.org/lalsuite/lal/
@@ -219,10 +232,18 @@ outputs:
         The LSC Algorithm Library for gravitational wave data analysis.
     test:
       commands:
-        - lal_version --verbose
+        - lal_fftw_wisdom --help  # [fft_impl == "fftw"]
+        - lal_fftwf_wisdom --help  # [fft_impl == "fftw"]
+        - lal_path2cache <<< A-B-0-1.gwf
+        - lal_searchsum2cache --help
         - lal_simd_detect
-      imports:
-        - lal
+        - lal_version --verbose
+        - test "$(lal_tconvert --rfc-2822 800000000)" == "Fri, 13 May 2005 06:13:07 +0000"  # [unix]
+        - test "$(lal_tconvert Fri, 13 May 2005 06:13:07 +0000)" -eq 800000000  # [unix]
+        - test "$(lal_tconvert 1831518865)" == "Tue Jan 19 03:14:07 GMT 2038"   # [linux]
+        - test "$(lal_tconvert 1831518865)" == "Tue Jan 19 03:14:07 UTC 2038"   # [osx]
+        - test "$(lal_tconvert 1831518866)" == "Tue Jan 19 03:14:08 GMT 2038"   # [linux]
+        - test "$(lal_tconvert 1831518866)" == "Tue Jan 19 03:14:08 UTC 2038"   # [osx]
 
 about:
   home: https://wiki.ligo.org/Computing/LALSuite
