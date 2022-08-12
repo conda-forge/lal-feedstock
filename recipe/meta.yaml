@@ -29,6 +29,8 @@ source:
   patches:
     # https://git.ligo.org/lscsoft/lalsuite/-/issues/580
     - no-test_tconvert.patch  # [osx]
+    # disable CHAR in ValueTest, see https://git.ligo.org/lscsoft/lalsuite/-/issues/580
+    - ValueTest-no-char.patch  # [linux and not x86_64]
 
 build:
   ignore_run_exports:
