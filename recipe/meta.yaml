@@ -51,7 +51,7 @@ requirements:
     - gsl
     - hdf5
     - mkl-devel {{ mkl }}  # [fft_impl == "mkl"]
-    - libzlib
+    - zlib
 
 outputs:
   - name: liblal
@@ -120,11 +120,11 @@ outputs:
     script: install-python.sh
     build:
       ignore_run_exports:
-        # things we declare to help the solver, but don't actually need
-        - mkl
-        # we don't link directly against libpython or numpy
+        - libzlib
         - numpy
         - python
+        # things we declare to help the solver, but don't actually need
+        - mkl
       string: {{ fft_impl }}_py{{ py }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
     requirements:
       build:
@@ -141,6 +141,7 @@ outputs:
         - numpy
         - python
         - six
+        - zlib
         # extras to help the solver:
         - mkl-devel {{ mkl }}  # [fft_impl == "mkl"]
       run:
