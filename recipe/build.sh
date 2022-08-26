@@ -9,22 +9,8 @@ _make="make -j ${CPU_COUNT} V=1 VERBOSE=1"
 mkdir -pv _build
 cd _build
 
-# replace package name in debug-prefix-map with source name
-export CFLAGS=$(
-   echo ${CFLAGS:-} |
-   sed -E 's|'\/usr\/local\/src\/conda\/${PKG_NAME}'|/usr/local/src/conda/lal|g'
-)
-
-# select FFT implementation
-if [[ "${fft_impl}" == "mkl" ]]; then
-    FFT_CONFIG_ARGS="--disable-static --enable-intelfft"
-else
-    FFT_CONFIG_ARGS=""
-fi
-
-# only link libraries we actually use
-export GSL_LIBS="-L${PREFIX}/lib -lgsl"
-export HDF5_LIBS="-L${PREFIX}/lib -lhdf5 -lhdf5_hl"
+# add all of the common instructions
+. ${RECIPE_DIR}/common.sh
 
 # configure
 ${SRC_DIR}/configure \
@@ -36,7 +22,7 @@ ${SRC_DIR}/configure \
 	--enable-swig-iface \
 	--prefix="${PREFIX}" \
 	--with-hdf5=yes \
-	${FFT_CONFIG_ARGS} \
+	${CONFIGURE_ARGS} \
 ;
 
 # build

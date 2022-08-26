@@ -14,22 +14,8 @@ _builddir="_build${PY_VER}"
 cp -r _build ${_builddir}
 cd ${_builddir}
 
-# replace package name in debug-prefix-map with source name
-export CFLAGS=$(
-   echo ${CFLAGS:-} |
-   sed -E 's|'\/usr\/local\/src\/conda\/${PKG_NAME}'|/usr/local/src/conda/lal|g'
-)
-
-# if we're using MKL, the C library will have been built with
-# --enable-intelfft, so we have to use that here as well
-if [[ "${fft_impl}" == "mkl" ]]; then
-    FFT_CONFIG_ARGS="--disable-static --enable-intelfft"
-else
-    FFT_CONFIG_ARGS=""
-fi
-
-# only link libraries we actually use
-export GSL_LIBS="-L${PREFIX}/lib -lgsl"
+# add all of the common instructions
+. ${RECIPE_DIR}/common.sh
 
 # configure only python bindings and pure-python extras
 ${SRC_DIR}/configure \
@@ -39,7 +25,7 @@ ${SRC_DIR}/configure \
 	--enable-python \
 	--enable-swig-python \
 	--prefix=$PREFIX \
-	${FFT_CONFIG_ARGS} \
+	${CONFIGURE_ARGS} \
 ;
 
 # patch out dependency_libs from libtool archive to prevent overlinking
