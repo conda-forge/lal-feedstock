@@ -239,10 +239,8 @@ outputs:
         - lal_version --verbose
         - test "$(lal_tconvert --rfc-2822 800000000)" == "Fri, 13 May 2005 06:13:07 +0000"  # [unix]
         - test "$(lal_tconvert Fri, 13 May 2005 06:13:07 +0000)" -eq 800000000  # [unix]
-        - test "$(lal_tconvert 1831518865)" == "Tue Jan 19 03:14:07 GMT 2038"   # [linux]
-        - test "$(lal_tconvert 1831518865)" == "Tue Jan 19 03:14:07 UTC 2038"   # [osx]
-        - test "$(lal_tconvert 1831518866)" == "Tue Jan 19 03:14:08 GMT 2038"   # [linux]
-        - test "$(lal_tconvert 1831518866)" == "Tue Jan 19 03:14:08 UTC 2038"   # [osx]
+        - test "$(lal_tconvert 1831518865)" == "Tue Jan 19 03:14:07 UTC 2038"
+        - test "$(lal_tconvert 1831518866)" == "Tue Jan 19 03:14:08 UTC 2038"
 
 about:
   home: https://wiki.ligo.org/Computing/LALSuite
