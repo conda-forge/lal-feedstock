@@ -1,5 +1,5 @@
 {% set name = "lal" %}
-{% set version = "7.2.2" %}
+{% set version = "7.2.4" %}
 
 # define build number
 {% set build = 0 %}
@@ -25,7 +25,7 @@ package:
 
 source:
   url: https://software.igwn.org/sources/source/lalsuite/{{ name }}-{{ version }}.tar.xz
-  sha256: e3f2bd92dcde2726b5ccadf68a41b742c6fd52dff8cefd3128f5bb04d5e99f21
+  sha256: e00d15216fca06b35b2b0c27fa360ed5042c700d5dd3eaf8f249957a1e199ccf
   patches:
     # disable CHAR in ValueTest, see https://git.ligo.org/lscsoft/lalsuite/-/issues/580
     - ValueTest-no-char.patch  # [linux and not x86_64]
