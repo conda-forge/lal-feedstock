@@ -2,7 +2,7 @@
 {% set version = "7.2.4" %}
 
 # define build number
-{% set build = 0 %}
+{% set build = 1 %}
 
 # default FFT implememntation to FFTW
 {% set fft_impl = fft_impl or 'fftw' %}
@@ -13,11 +13,11 @@
 {% endif %}
 
 # dependency versions
-{% set swig_version = "3.0.10" %}
+{% set swig_version = "3.0.10,<4.1.0a0" %}
 
 # avoid circular imports that would break migrations
 {% set migrating = False %}
-{% set migrating = True %}  # [not x86_64 or python_impl != 'cpython' or py >= 311]
+{% set migrating = True %}  # [python_impl!='cpython' or py>=311]
 
 package:
   name: {{ name }}-split
@@ -218,7 +218,9 @@ outputs:
         - numpy
         - python
         - {{ pin_subpackage('python-lal', exact=True) }}
+        {% if not migrating %}
         - python-ligo-lw
+        {% endif %}
     about:
       home: https://wiki.ligo.org/Computing/LALSuite
       doc_url: https://lscsoft.docs.ligo.org/lalsuite/lal/
@@ -234,7 +236,9 @@ outputs:
         - lal_fftw_wisdom --help  # [fft_impl == "fftw"]
         - lal_fftwf_wisdom --help  # [fft_impl == "fftw"]
         - lal_path2cache <<< A-B-0-1.gwf
+        {% if not migrating %}
         - lal_searchsum2cache --help
+        {% endif %}
         - lal_simd_detect
         - lal_version --verbose
         - test "$(lal_tconvert --rfc-2822 800000000)" == "Fri, 13 May 2005 06:13:07 +0000"  # [unix]
