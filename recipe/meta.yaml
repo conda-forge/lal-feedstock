@@ -2,7 +2,7 @@
 {% set version = "7.2.4" %}
 
 # define build number
-{% set build = 1 %}
+{% set build = 2 %}
 
 # default FFT implememntation to FFTW
 {% set fft_impl = fft_impl or 'fftw' %}
@@ -17,7 +17,7 @@
 
 # avoid circular imports that would break migrations
 {% set migrating = False %}
-{% set migrating = True %}  # [python_impl!='cpython' or py>=311]
+{% set migrating = True %}  # [python_impl!='cpython' or py>=312]
 
 package:
   name: {{ name }}-split
