@@ -117,7 +117,7 @@ outputs:
         applications that use the LAL library.
 
   - name: python-lal
-    script: install-python.sh
+    script: build-python.sh
     build:
       ignore_run_exports:
         - libzlib
