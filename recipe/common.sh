@@ -24,6 +24,7 @@ CONFIGURE_ARGS="
   --prefix=${PREFIX}
   --disable-doxygen
   --disable-gcc-flags
+  --disable-static
   --disable-swig-octave
   --with-hdf5=yes
 "
@@ -35,5 +36,5 @@ fi
 
 # select FFT implementation
 if [[ "${fft_impl}" == "mkl" ]]; then
-    CONFIGURE_ARGS="${CONFIGURE_ARGS} --disable-static --enable-intelfft"
+    CONFIGURE_ARGS="${CONFIGURE_ARGS} --enable-intelfft"
 fi
