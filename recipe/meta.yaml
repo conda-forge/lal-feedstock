@@ -2,7 +2,7 @@
 {% set version = "7.2.4" %}
 
 # define build number
-{% set build = 2 %}
+{% set build = 3 %}
 
 # default FFT implememntation to FFTW
 {% set fft_impl = fft_impl or 'fftw' %}
@@ -117,7 +117,7 @@ outputs:
         applications that use the LAL library.
 
   - name: python-lal
-    script: install-python.sh
+    script: build-python.sh
     build:
       ignore_run_exports:
         - libzlib
