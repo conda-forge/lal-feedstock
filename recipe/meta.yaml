@@ -2,7 +2,7 @@
 {% set version = "7.2.4" %}
 
 # define build number
-{% set build = 3 %}
+{% set build = 4 %}
 
 # default FFT implememntation to FFTW
 {% set fft_impl = fft_impl or 'fftw' %}
