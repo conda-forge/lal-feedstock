@@ -30,7 +30,7 @@ CONFIGURE_ARGS="
 "
 
 # disable help2man when cross-compiling
-if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" || "${CROSSCOMPILING_EMULATOR}" != "" ]]; then
+if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" = "1" && "${CROSSCOMPILING_EMULATOR}" = "" ]]; then
   CONFIGURE_ARGS="${CONFIGURE_ARGS} --disable-help2man"
 fi
 

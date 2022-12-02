@@ -2,7 +2,7 @@
 {% set version = "7.2.4" %}
 
 # define build number
-{% set build = 3 %}
+{% set build = 4 %}
 
 # default FFT implememntation to FFTW
 {% set fft_impl = fft_impl or 'fftw' %}
@@ -129,6 +129,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('c') }}
+        - help2man >=1.37
         - make
         - pkg-config >=0.18.0
         - swig >={{ swig_version }}
