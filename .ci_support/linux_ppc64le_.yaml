@@ -1,7 +1,7 @@
 c_compiler:
 - gcc
 c_compiler_version:
-- '10'
+- '11'
 cdt_name:
 - cos7
 channel_sources:
@@ -9,7 +9,7 @@ channel_sources:
 channel_targets:
 - conda-forge main
 docker_image:
-- quay.io/condaforge/linux-anvil-ppc64le
+- quay.io/condaforge/linux-anvil-cos7-x86_64
 fft_impl:
 - fftw
 fftw:
@@ -17,7 +17,7 @@ fftw:
 gsl:
 - '2.7'
 hdf5:
-- 1.12.2
+- 1.14.0
 mkl:
 - '2022'
 numpy:
