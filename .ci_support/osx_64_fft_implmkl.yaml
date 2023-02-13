@@ -15,7 +15,7 @@ fftw:
 gsl:
 - '2.7'
 hdf5:
-- 1.12.2
+- 1.14.0
 macos_machine:
 - x86_64-apple-darwin13.4.0
 mkl:
