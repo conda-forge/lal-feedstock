@@ -140,6 +140,7 @@ outputs:
       host:
         - {{ pin_subpackage('liblal', exact=True) }}
         - numpy
+        - pytest
         - python
         - six
         - zlib
@@ -155,7 +156,6 @@ outputs:
         - python
         - python-dateutil
         - scipy
-        - six
     test:
       requires:
         - freezegun
