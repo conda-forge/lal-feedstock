@@ -1,11 +1,33 @@
+About lal-feedstock
+===================
+
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/lal-feedstock/blob/main/LICENSE.txt)
+
 About lal
-=========
+---------
 
 Home: https://wiki.ligo.org/Computing/LALSuite
 
 Package license: GPL-2.0-or-later
 
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/lal-feedstock/blob/main/LICENSE.txt)
+Summary: LSC Algorithm Library
+
+Development: https://git.ligo.org/lscsoft/lalsuite/
+
+Documentation: https://lscsoft.docs.ligo.org/lalsuite/lal/
+
+The LSC Algorithm Library for gravitational wave data analysis.
+This package contains the shared-object libraries needed to run
+applications that use the LAL library.  If you want to install
+the Python bindings, please install the associated python-lal
+package.
+
+About liblal
+------------
+
+Home: https://wiki.ligo.org/Computing/LALSuite
+
+Package license: GPL-2.0-or-later
 
 Summary: LSC Algorithm Library shared object libraries
 
@@ -16,6 +38,42 @@ Documentation: https://lscsoft.docs.ligo.org/lalsuite/lal/
 The LSC Algorithm Library for gravitational wave data analysis.
 This package contains the shared-object libraries needed to run
 applications that use the LAL library.
+
+About python-lal
+----------------
+
+Home: https://wiki.ligo.org/Computing/LALSuite
+
+Package license: GPL-2.0-or-later
+
+Summary: LSC Algorithm Library Python bindings
+
+Development: https://git.ligo.org/lscsoft/lalsuite/
+
+Documentation: https://lscsoft.docs.ligo.org/lalsuite/lal/
+
+The LSC Algorithm Library for gravitational wave data analysis.
+This package contains the Python bindings of the LAL C libraries
+and additional Python modules.
+
+Note: this package only provides the importable Python libraries.
+All command-line interfaces, scripts, and executables are
+part of the `lal` package.
+
+About lal
+---------
+
+Home: https://wiki.ligo.org/Computing/LALSuite
+
+Package license: GPL-2.0-or-later
+
+Summary: LSC Algorithm Library
+
+Development: https://git.ligo.org/lscsoft/lalsuite/
+
+Documentation: https://lscsoft.docs.ligo.org/lalsuite/lal/
+
+The LSC Algorithm Library for gravitational wave data analysis.
 
 
 Current build status
