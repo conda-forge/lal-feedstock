@@ -1,8 +1,8 @@
 {% set name = "lal" %}
-{% set version = "7.2.4" %}
+{% set version = "7.3.0" %}
 
 # define build number
-{% set build = 5 %}
+{% set build = 0 %}
 
 # default FFT implememntation to FFTW
 {% set fft_impl = fft_impl or 'fftw' %}
@@ -25,7 +25,7 @@ package:
 
 source:
   url: https://software.igwn.org/sources/source/lalsuite/{{ name }}-{{ version }}.tar.xz
-  sha256: e00d15216fca06b35b2b0c27fa360ed5042c700d5dd3eaf8f249957a1e199ccf
+  sha256: 288ac42a8d066aa8a56c0aa4d796f2b3776e9f3ce22f23e38a06cf7ac72df5d2
   patches:
     # disable CHAR in ValueTest, see https://git.ligo.org/lscsoft/lalsuite/-/issues/580
     - ValueTest-no-char.patch  # [linux and not x86_64]
