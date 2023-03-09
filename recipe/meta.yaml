@@ -2,7 +2,7 @@
 {% set version = "7.3.0" %}
 
 # define build number
-{% set build = 0 %}
+{% set build = 1 %}
 
 # default FFT implememntation to FFTW
 {% set fft_impl = fft_impl or 'fftw' %}
@@ -13,7 +13,7 @@
 {% endif %}
 
 # dependency versions
-{% set swig_version = "3.0.10,<4.1.0a0" %}
+{% set swig_version = "3.0.10" %}
 
 # avoid circular imports that would break migrations
 {% set migrating = False %}
