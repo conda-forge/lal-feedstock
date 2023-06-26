@@ -3,7 +3,7 @@ BUILD:
 c_compiler:
 - gcc
 c_compiler_version:
-- '11'
+- '12'
 cdt_arch:
 - aarch64
 cdt_name:
@@ -21,7 +21,7 @@ fftw:
 gsl:
 - '2.7'
 hdf5:
-- 1.14.0
+- 1.14.1
 mkl:
 - '2022'
 numpy:
