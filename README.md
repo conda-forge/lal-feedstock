@@ -3,6 +3,7 @@ About lal-feedstock
 
 Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/lal-feedstock/blob/main/LICENSE.txt)
 
+
 About lal
 ---------
 
@@ -22,6 +23,7 @@ applications that use the LAL library.  If you want to install
 the Python bindings, please install the associated python-lal
 package.
 
+
 About liblal
 ------------
 
@@ -38,6 +40,7 @@ Documentation: https://lscsoft.docs.ligo.org/lalsuite/lal/
 The LSC Algorithm Library for gravitational wave data analysis.
 This package contains the shared-object libraries needed to run
 applications that use the LAL library.
+
 
 About python-lal
 ----------------
@@ -59,6 +62,7 @@ and additional Python modules.
 Note: this package only provides the importable Python libraries.
 All command-line interfaces, scripts, and executables are
 part of the `lal` package.
+
 
 About lal
 ---------
