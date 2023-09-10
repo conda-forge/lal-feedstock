@@ -74,8 +74,6 @@ outputs:
       run:
         - fftw  # [fft_impl == "fftw"]
         - gsl
-        - hdf5
-        - libzlib
       run_constrained:
         # 7.1.1 is the version where the packages were restructured
         - lal >=7.1.1
