@@ -2,7 +2,7 @@
 {% set version = "7.3.1" %}
 
 # define build number
-{% set build = 1 %}
+{% set build = 2 %}
 
 # default FFT implememntation to FFTW
 {% set fft_impl = fft_impl or 'fftw' %}
@@ -74,8 +74,6 @@ outputs:
       run:
         - fftw  # [fft_impl == "fftw"]
         - gsl
-        - hdf5
-        - libzlib
       run_constrained:
         # 7.1.1 is the version where the packages were restructured
         - lal >=7.1.1
