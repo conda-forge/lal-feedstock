@@ -19,7 +19,7 @@ hdf5:
 macos_machine:
 - arm64-apple-darwin20.0.0
 mkl:
-- '2023'
+- '2022'
 numpy:
 - '1.22'
 - '1.23'
