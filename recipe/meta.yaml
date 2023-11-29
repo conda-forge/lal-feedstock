@@ -2,7 +2,7 @@
 {% set version = "7.4.1" %}
 
 # define build number
-{% set build = 0 %}
+{% set build = 1 %}
 
 # default FFT implememntation to FFTW
 {% set fft_impl = fft_impl or 'fftw' %}
@@ -27,8 +27,8 @@ source:
   url: https://software.igwn.org/sources/source/lalsuite/{{ name }}-{{ version }}.tar.xz
   sha256: 5c840d00e91a51d03d3d8cdc358fd8e5597929e52eecefd15c49cc9833fc1ace
   patches:
-    # disable CHAR in ValueTest, see https://git.ligo.org/lscsoft/lalsuite/-/issues/580
-    - ValueTest-no-char.patch  # [linux and not x86_64]
+    - 0001-disable-CHAR-tests-in-ValueTest.patch  # [linux and not x86_64]
+    - 0002-lal-use-RTLD_DEEPBIND-when-importing-the-LAL-SWIG-li.patch  # [linux]
 
 build:
   ignore_run_exports:
@@ -169,6 +169,8 @@ outputs:
               --ignore test/python/test_rate.py
               -k 'not lal.rate and not lal.series'
         {%- endif %}
+        # test regression for https://git.ligo.org/lscsoft/lalsuite/-/issues/478
+        - python -c "import numpy; import lal; print(lal.CreateForwardREAL8FFTPlan(512, 1))"
     about:
       home: https://wiki.ligo.org/Computing/LALSuite
       doc_url: https://lscsoft.docs.ligo.org/lalsuite/lal/

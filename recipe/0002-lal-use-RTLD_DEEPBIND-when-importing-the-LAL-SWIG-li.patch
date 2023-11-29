@@ -1,0 +1,41 @@
+From 194ccd77ea5b65c3f223862f3358f41c9b9f147f Mon Sep 17 00:00:00 2001
+From: "duncan.macleod" <duncan.macleod@ligo.org>
+Date: Wed, 29 Nov 2023 14:16:29 +0000
+Subject: [PATCH 2/2] lal: use RTLD_DEEPBIND when importing the LAL SWIG
+ library
+
+so that we avoid collisions with FFTW symbols from MKL within the global namespace,
+closes #300,
+closes #478
+---
+ lal/python/lal/__init__.py.in | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
+
+diff --git a/lal/python/lal/__init__.py.in b/lal/python/lal/__init__.py.in
+index 2e7ab7c4f0..30f106f0de 100644
+--- a/lal/python/lal/__init__.py.in
++++ b/lal/python/lal/__init__.py.in
+@@ -1,7 +1,16 @@
+-# Import SWIG wrappings, if available
+-@SWIG_BUILD_PYTHON_TRUE@from .lal import *
+-
+-# Redirect standard output/error when running under IPython
++@SWIG_BUILD_PYTHON_TRUE@# Import SWIG wrappings, if available, using RTLD_DEEPBIND
++@SWIG_BUILD_PYTHON_TRUE@# to avoid symbol conflicts
++@SWIG_BUILD_PYTHON_TRUE@import os
++@SWIG_BUILD_PYTHON_TRUE@import sys
++@SWIG_BUILD_PYTHON_TRUE@_dlopenflags = sys.getdlopenflags()
++@SWIG_BUILD_PYTHON_TRUE@sys.setdlopenflags(_dlopenflags | os.RTLD_DEEPBIND)
++@SWIG_BUILD_PYTHON_TRUE@try:
++@SWIG_BUILD_PYTHON_TRUE@    from .lal import *
++@SWIG_BUILD_PYTHON_TRUE@finally:  # always reset the dlopen flags
++@SWIG_BUILD_PYTHON_TRUE@    sys.setdlopenflags(_dlopenflags)
++@SWIG_BUILD_PYTHON_TRUE@    del _dlopenflags
++@SWIG_BUILD_PYTHON_TRUE@
++@SWIG_BUILD_PYTHON_TRUE@# Redirect standard output/error when running under IPython
+ @SWIG_BUILD_PYTHON_TRUE@from contextlib import contextmanager
+ @SWIG_BUILD_PYTHON_TRUE@try:
+ @SWIG_BUILD_PYTHON_TRUE@    get_ipython()
+-- 
+2.39.2
+
