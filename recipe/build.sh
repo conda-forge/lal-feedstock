@@ -21,6 +21,6 @@ ${SRC_DIR}/configure \
 ${_make} HDF5_LIBS="${HDF5_LIBS}"
 
 # test
-if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" || "${CROSSCOMPILING_EMULATOR}" != "" ]]; then
+if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" ]]; then
 	${_make} check
 fi

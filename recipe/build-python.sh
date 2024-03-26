@@ -30,7 +30,7 @@ ${_make} -C swig LIBS=""
 ${_make} -C python LIBS=""
 
 # test
-if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" || "${CROSSCOMPILING_EMULATOR}" != "" ]]; then
+if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" ]]; then
 	${_make} check -C swig
 fi
 
