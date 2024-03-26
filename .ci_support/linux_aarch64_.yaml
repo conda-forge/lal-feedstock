@@ -4,6 +4,10 @@ c_compiler:
 - gcc
 c_compiler_version:
 - '12'
+c_stdlib:
+- sysroot
+c_stdlib_version:
+- '2.17'
 cdt_arch:
 - aarch64
 cdt_name:
@@ -21,7 +25,7 @@ fftw:
 gsl:
 - '2.7'
 hdf5:
-- 1.14.2
+- 1.14.3
 mkl:
 - '2022'
 numpy:
@@ -46,6 +50,8 @@ python_impl:
 target_platform:
 - linux-aarch64
 zip_keys:
+- - c_stdlib_version
+  - cdt_name
 - - python
   - numpy
   - python_impl
