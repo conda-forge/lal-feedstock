@@ -2,7 +2,7 @@
 {% set version = "7.5.0" %}
 
 # define build number
-{% set build = 1 %}
+{% set build = 2 %}
 
 # default FFT implememntation to FFTW
 {% set fft_impl = fft_impl or 'fftw' %}
@@ -42,6 +42,7 @@ build:
 requirements:
   build:
     - {{ compiler('c') }}
+    - {{ stdlib("c") }}
     - pkg-config >=0.18.0
     - make
     - bc
@@ -63,6 +64,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('c') }}
+        - {{ stdlib("c") }}
         - make  # [not win]
         - swig >={{ swig_version }}
       host:
@@ -127,6 +129,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('c') }}
+        - {{ stdlib("c") }}
         - help2man >=1.37
         - make
         - pkg-config >=0.18.0
@@ -150,7 +153,6 @@ outputs:
         #       doesn't happen on osx, I'm not sure.
         - {{ pin_subpackage('liblal', exact=True) }}
         - ligo-segments
-        - {{ pin_compatible('numpy') }}
         - python
         - python-dateutil
         - scipy
@@ -201,6 +203,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('c') }}
+        - {{ stdlib("c") }}
         - help2man >=1.37
         - make
         - sed
