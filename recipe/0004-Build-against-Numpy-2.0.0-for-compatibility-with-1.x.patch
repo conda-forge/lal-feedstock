@@ -1,0 +1,206 @@
+From be8359f3fd068da55a3c604b26107b552f1fb3b3 Mon Sep 17 00:00:00 2001
+From: Leo Singer <leo.singer@ligo.org>
+Date: Thu, 20 Jun 2024 21:30:55 -0400
+Subject: [PATCH 4/5] Build against Numpy 2.0.0 for compatibility with 1.x &
+ 2.x
+
+See https://numpy.org/devdocs/dev/depending_on_numpy.html#numpy-2-abi-handling.
+
+(cherry picked from commit ea7ccd461f37007efdd9880df6b188b5f0b9dc0d)
+---
+ lal/swig/SWIGPython.i         | 102 ++++++++++++++++++++++++----------
+ lal/swig/SWIGTestLALPython.py |  16 ++++--
+ 2 files changed, 85 insertions(+), 33 deletions(-)
+
+diff --git a/lal/swig/SWIGPython.i b/lal/swig/SWIGPython.i
+index fcd863531b..6cdb4c5adf 100644
+--- a/lal/swig/SWIGPython.i
++++ b/lal/swig/SWIGPython.i
+@@ -37,7 +37,37 @@
+ // Include NumPy headers in wrapping code, and ensure that NumPy array module is loaded along with
+ // this module.
+ %header %{
++/* FIXME: see https://github.com/numpy/numpy/pull/26771 */
++#ifdef __GNUC__
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wstrict-prototypes"
++#endif
+ #include <numpy/arrayobject.h>
++#ifdef __GNUC__
++#pragma GCC diagnostic pop
++#endif
++
++/*
++ * Allow compiling on NumPy 1.x.
++ * FIXME: drop once we do all builds against Numpy 2.x (although we may still
++ * support Numpy 1.x and 2.x at runtime).
++ * See hhttps://numpy.org/devdocs/numpy_2_0_migration_guide.html#c-api-changes.
++ */
++#if NPY_ABI_VERSION < 0x02000000
++  /*
++   * Define 2.0 feature version as it is needed below to decide whether we
++   * compile for both 1.x and 2.x (defining it gaurantees 1.x only).
++   */
++  #define NPY_2_0_API_VERSION 0x00000012
++  /*
++   * If we are compiling with NumPy 1.x, PyArray_RUNTIME_VERSION so we
++   * pretend the `PyArray_RUNTIME_VERSION` is `NPY_FEATURE_VERSION`.
++   * This allows downstream to use `PyArray_RUNTIME_VERSION` if they need to.
++   */
++  #define PyArray_RUNTIME_VERSION NPY_FEATURE_VERSION
++  /* Compiling on NumPy 1.x where these are the same: */
++  #define PyArray_DescrProto PyArray_Descr
++#endif
+ %}
+ %init %{
+ import_array();
+@@ -802,47 +832,63 @@ SWIGINTERN bool swiglal_release_parent(void *ptr) {
+     (PyArray_ScalarKindFunc*)NULL,   // scalarkind
+     (int**)NULL,   // cancastscalarkindto
+     (int*)swiglal_py_array_objview_copyswap_cancastto,   // cancastto
+-    (PyArray_FastClipFunc*)NULL,   // fastclip
+-    (PyArray_FastPutmaskFunc*)NULL,   // fastputmask
+-    (PyArray_FastTakeFunc*)NULL,   // fasttake
++    (void*)NULL,   // fastclip, deprecated and unused
++    (void*)NULL,   // fastputmask, deprecated and unused
++    (void*)NULL,   // fasttake, deprecated and unused
+   };
+ 
+   // This function returns the NumPy array descriptor appropriate for the supplied SWIG type
+   // descriptor. If no array descriptor exists, it creates one from the array descriptor for type
+   // ACFTYPE.
++  //
++  // Returns a new reference.
+   SWIGINTERN PyArray_Descr* swiglal_py_array_objview_##ACFTYPE##_descr(const bool isptr, swig_type_info* tinfo, const int esize) {
+ 
+     // Lookup existing NumPy array descriptor for SWIG type descriptor.
+     PyArray_Descr* *pdescr = swiglal_py_array_descr_from_tinfo(isptr, tinfo);
+-
+-    // Create NumPy array descriptor if none yet exists.
+     if (*pdescr == NULL) {
+-      *pdescr = PyArray_DescrNewFromType(NPY_VOID);
+-      if (*pdescr == NULL) {
+-        return NULL;
+-      }
+-      (*pdescr)->typeobj = SwigPyObject_type();
+-      (*pdescr)->byteorder = '=';
+-      (*pdescr)->flags = NPY_LIST_PICKLE | NPY_NEEDS_INIT | NPY_NEEDS_PYAPI | NPY_USE_GETITEM | NPY_USE_SETITEM;
+-      (*pdescr)->type_num = 0;
+-      (*pdescr)->elsize = esize;
+-      (*pdescr)->alignment = 1;
+-      (*pdescr)->subarray = NULL;
+-      (*pdescr)->names = NULL;
+-      (*pdescr)->fields = NULL;
+-      (*pdescr)->f = &swiglal_py_array_objview_##ACFTYPE##_arrfuncs;
+-
+-      if (PyArray_RegisterDataType(*pdescr) < 0) {
+-        return NULL;
++      // Create NumPy array descriptor if none yet exists.
++
++      // Note that PyArray_DescrProto structs are supposed to be immortal. They
++      // must not be Py_DECREF'ed. See
++      // https://github.com/numpy/numpy/issues/26763#issuecomment-2181177478.
++      PyArray_DescrProto *proto = PyObject_Malloc(sizeof(PyArray_DescrProto));
++      if (proto == NULL) {
++        PyErr_NoMemory();
++      } else {
++        PyArray_DescrProto src = {
++          PyObject_HEAD_INIT(&PyArrayDescr_Type)
++          .typeobj = SwigPyObject_type(),
++          .kind = 'V',
++          .type = 'V',
++          .byteorder = '=',
++          .flags = NPY_LIST_PICKLE | NPY_NEEDS_INIT | NPY_NEEDS_PYAPI | NPY_USE_GETITEM | NPY_USE_SETITEM,
++          .elsize = esize,
++          .alignment = 1,
++          .f = &swiglal_py_array_objview_##ACFTYPE##_arrfuncs,
++          .hash = -1
++        };
++        *proto = src;
++
++        int typenum = PyArray_RegisterDataType(proto);
++        // FIXME: In Numpy 1.x, PyArray_RegisterDataType steals a reference,
++        // whereas in Numpy 2.x, it does not. See
++        // https://github.com/numpy/numpy/issues/26763
++        if (typenum < 0 || PyArray_RUNTIME_VERSION >= NPY_2_0_API_VERSION) {
++          PyObject_Free(proto);
++        }
++
++        if (typenum >= 0) {
++          *pdescr = PyArray_DescrFromType(typenum);
++        }
+       }
++    } else {
++      // PyArray_NewFromDescr steals a reference to the descriptor passed to it:
++      //   https://numpy.org/devdocs/reference/c-api/array.html#from-scratch
++      // so a reference count increment is needed here.
++      Py_INCREF(*pdescr);
+     }
+-
+-    // PyArray_NewFromDescr appears to steal a reference to the descriptor passed to it, so a
+-    // reference count increment is needed here.
+-    Py_INCREF(*pdescr);
+-
+     return *pdescr;
+-
+   }
+ 
+ } // %swiglal_py_array_objview_frag(ACFTYPE)
+diff --git a/lal/swig/SWIGTestLALPython.py b/lal/swig/SWIGTestLALPython.py
+index 072ffddd4d..a2e7b54689 100644
+--- a/lal/swig/SWIGTestLALPython.py
++++ b/lal/swig/SWIGTestLALPython.py
+@@ -14,6 +14,12 @@ import pytest
+ import numpy
+ from numpy.testing import assert_array_equal
+ 
++try:
++    from numpy.exceptions import ComplexWarning
++except ImportError:
++    # FIXME: Remove this once we require at least Numpy >= 1.25.0.
++    from numpy import ComplexWarning
++
+ # return if 'x' has both value 'v' and type 't'
+ def is_value_and_type(x, v, t):
+     return x == v and type(x) is t
+@@ -320,11 +326,11 @@ def test_dynamic_vector_matrix_conversions():
+         assert cm.data[2, 3] == complex(0.5, 1.5)
+         assert cm.data[3, 2] == complex(0.75, 1.0)
+         set_nice_error_handlers()
+-        with pytest.warns(numpy.ComplexWarning):
++        with pytest.warns(ComplexWarning):
+             iv.data[0] = cm.data[2, 3]
+         set_default_error_handlers()
+         set_nice_error_handlers()
+-        with pytest.warns(numpy.ComplexWarning):
++        with pytest.warns(ComplexWarning):
+             rv.data[0] = cm.data[3, 2]
+         set_default_error_handlers()
+ 
+@@ -1551,7 +1557,7 @@ def test_conversion_of_numpy_fixed_width_types_uint(inputs, result):
+         ((numpy.int8(10), numpy.int16(20), numpy.int32(30), numpy.int64(-40)), 20),
+         ((numpy.uint8(10), numpy.uint16(20), numpy.uint32(30), numpy.uint64(40)), 100),
+         (
+-            (numpy.float_(10), numpy.float16(20), numpy.float32(30), numpy.float64(40)),
++            (float(10), numpy.float16(20), numpy.float32(30), numpy.float64(40)),
+             100,
+         ),
+     ],
+@@ -1567,12 +1573,12 @@ def test_conversion_of_numpy_fixed_width_types_flt(inputs, result):
+         ((numpy.int8(10), numpy.int16(20), numpy.int32(30), numpy.int64(-40)), 20),
+         ((numpy.uint8(10), numpy.uint16(20), numpy.uint32(30), numpy.uint64(40)), 100),
+         (
+-            (numpy.float_(10), numpy.float16(20), numpy.float32(30), numpy.float64(40)),
++            (float(10), numpy.float16(20), numpy.float32(30), numpy.float64(40)),
+             100,
+         ),
+         (
+             (
+-                numpy.complex_(10),
++                complex(10),
+                 numpy.complex64(20),
+                 numpy.complex64(30),
+                 numpy.complex128(40),
+-- 
+2.39.2
+

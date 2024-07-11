@@ -29,6 +29,11 @@ source:
   patches:
     - 0001-disable-CHAR-tests-in-ValueTest.patch  # [linux and not x86_64]
     - 0002-lal-use-RTLD_DEEPBIND-when-importing-the-LAL-SWIG-li.patch  # [linux]
+    # backport https://git.ligo.org/lscsoft/lalsuite/-/merge_requests/2276
+    - 0003-Replace-PyArray_DESCR-a-elsize-with-PyArray_ITEMSIZE.patch
+    # backport https://git.ligo.org/lscsoft/lalsuite/-/merge_requests/2275
+    - 0004-Build-against-Numpy-2.0.0-for-compatibility-with-1.x.patch
+    - 0005-Increment-reference-count-unconditionally.patch
 
 build:
   ignore_run_exports:
