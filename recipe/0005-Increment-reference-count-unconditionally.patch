@@ -1,0 +1,37 @@
+From 1ceeeb4b46c04e78748c607e3156ea03d6265fbc Mon Sep 17 00:00:00 2001
+From: Leo Singer <leo.singer@ligo.org>
+Date: Mon, 1 Jul 2024 10:04:53 -0400
+Subject: [PATCH 5/5] Increment reference count unconditionally
+
+Note: this leaks one reference
+(cherry picked from commit 408d671d7100a75ccf2f9b24ab7e3f72b8a83dd4)
+---
+ lal/swig/SWIGPython.i | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
+
+diff --git a/lal/swig/SWIGPython.i b/lal/swig/SWIGPython.i
+index 6cdb4c5adf..aef621cb83 100644
+--- a/lal/swig/SWIGPython.i
++++ b/lal/swig/SWIGPython.i
+@@ -882,12 +882,13 @@ SWIGINTERN bool swiglal_release_parent(void *ptr) {
+           *pdescr = PyArray_DescrFromType(typenum);
+         }
+       }
+-    } else {
+-      // PyArray_NewFromDescr steals a reference to the descriptor passed to it:
+-      //   https://numpy.org/devdocs/reference/c-api/array.html#from-scratch
+-      // so a reference count increment is needed here.
+-      Py_INCREF(*pdescr);
+     }
++
++    // PyArray_NewFromDescr steals a reference to the descriptor passed to it:
++    //   https://numpy.org/devdocs/reference/c-api/array.html#from-scratch
++    // so a reference count increment is needed here.
++    Py_XINCREF(*pdescr);
++
+     return *pdescr;
+   }
+ 
+-- 
+2.39.2
+

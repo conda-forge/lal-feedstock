@@ -1,7 +1,7 @@
-From 62972fb1891c1b388463dc86ddecd77669cfdfed Mon Sep 17 00:00:00 2001
+From 257c0d119788816f47f3355a0e555a3f1fe76847 Mon Sep 17 00:00:00 2001
 From: "duncan.macleod" <duncan.macleod@ligo.org>
 Date: Wed, 29 Nov 2023 15:30:57 +0000
-Subject: [PATCH 1/2] disable CHAR tests in ValueTest
+Subject: [PATCH 1/5] disable CHAR tests in ValueTest
 
 these fail on linux arch
 ---
