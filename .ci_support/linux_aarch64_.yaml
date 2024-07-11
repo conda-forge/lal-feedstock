@@ -13,7 +13,7 @@ cdt_arch:
 cdt_name:
 - cos7
 channel_sources:
-- conda-forge/label/numpy_rc,conda-forge
+- conda-forge
 channel_targets:
 - conda-forge main
 docker_image:
@@ -59,4 +59,4 @@ zip_keys:
   - numpy
   - python_impl
 zlib:
-- '1.2'
+- '1'
