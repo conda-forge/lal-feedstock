@@ -1,14 +1,16 @@
 {% set name = "lal" %}
-{% set version = "7.5.0" %}
+{% set version = "7.6.0" %}
 
 # define build number
-{% set build = 2 %}
+{% set build = 0 %}
 
 # default FFT implememntation to FFTW
-{% set fft_impl = fft_impl or 'fftw' %}
+{% if fft_impl is not defined %}
+{% set fft_impl = "fftw" %}
+{% endif %}
 
 # prefer FFTW builds over MKL using a build number offset
-{% if fft_impl == 'fftw' %}
+{% if fft_impl == "fftw" %}
 {% set build = build + 100 %}
 {% endif %}
 
@@ -17,7 +19,7 @@
 
 # avoid circular imports that would break migrations
 {% set migrating = False %}
-{% set migrating = True %}  # [python_impl!='cpython' or py>=312]
+{% set migrating = True %}  # [python_impl!='cpython' or py>=313]
 
 package:
   name: {{ name }}-split
@@ -25,7 +27,7 @@ package:
 
 source:
   url: https://software.igwn.org/sources/source/lalsuite/{{ name }}-{{ version }}.tar.xz
-  sha256: 9bb692013c534880cf3eeb7c8e45c2a32bd6d74e7cf0c6918f638bc15bd0cf5d
+  sha256: c173ff3112065706dc0ad1cc5062b32ae72a25de1a079bad9d198f657b82e463
   patches:
     - 0001-disable-CHAR-tests-in-ValueTest.patch  # [linux and not x86_64]
     - 0002-lal-use-RTLD_DEEPBIND-when-importing-the-LAL-SWIG-li.patch  # [linux]
@@ -36,6 +38,7 @@ source:
     - 0005-Increment-reference-count-unconditionally.patch
 
 build:
+  error_overlinking: true
   ignore_run_exports:
     - blas
     # run_exports parsing for fftw is broken, so we ignore it
@@ -63,6 +66,7 @@ outputs:
   - name: liblal
     script: install-lib.sh
     build:
+      error_overlinking: true
       run_exports:
         - {{ pin_subpackage("liblal", max_pin="x") }}
       string: {{ fft_impl }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
@@ -124,12 +128,11 @@ outputs:
   - name: python-lal
     script: build-python.sh
     build:
+      error_overlinking: true
       ignore_run_exports:
         - libzlib
-        - numpy
-        - python
         # things we declare to help the solver, but don't actually need
-        - mkl
+        - mkl  # [fft_impl == "mkl"]
       string: {{ fft_impl }}_py{{ py }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
     requirements:
       build:
@@ -198,12 +201,10 @@ outputs:
   - name: lal
     script: install-bin.sh
     build:
+      error_overlinking: true
       ignore_run_exports:
         # things we declare to help the solver, but don't actually need
         - mkl
-        # we don't link directly against libpython or numpy
-        - numpy
-        - python
       string: {{ fft_impl }}_py{{ py }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
     requirements:
       build:
