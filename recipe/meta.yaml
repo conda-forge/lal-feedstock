@@ -29,13 +29,25 @@ source:
   url: https://software.igwn.org/sources/source/lalsuite/{{ name }}-{{ version }}.tar.xz
   sha256: c173ff3112065706dc0ad1cc5062b32ae72a25de1a079bad9d198f657b82e463
   patches:
-    - 0001-disable-CHAR-tests-in-ValueTest.patch  # [linux and not x86_64]
-    - 0002-lal-use-RTLD_DEEPBIND-when-importing-the-LAL-SWIG-li.patch  # [linux]
-    # backport https://git.ligo.org/lscsoft/lalsuite/-/merge_requests/2276
-    - 0003-Replace-PyArray_DESCR-a-elsize-with-PyArray_ITEMSIZE.patch
-    # backport https://git.ligo.org/lscsoft/lalsuite/-/merge_requests/2275
-    - 0004-Build-against-Numpy-2.0.0-for-compatibility-with-1.x.patch
-    - 0005-Increment-reference-count-unconditionally.patch
+    # to update the patches for a new release:
+    #
+    #     # -- checkout the new source release tag
+    #     cd /path/to/git/lalsuite
+    #     git fetch
+    #     git checkout <release-tag>
+    #     # -- apply the patches on top of the release tag
+    #     git am --3way /path/to/git/lal-feedstock/recipe/patches/*.patch
+    #     <resolve-any-conflicts>
+    #     # -- render new patch files
+    #     git format-patch <release-tag> lal/ -o lal-patches
+    #     # -- copy them back to the feedstock
+    #     cd /path/to/git/lal-feedstock
+    #     git rm recipe/patches/*.patch
+    #     cp /path/to/git/lalsuite/lal-patches/*.patch recipe/patches/
+    #     git add recipe/patches/*.patch
+    #     <update-this-file-as-required>
+
+    - patches/0001-lal-use-RTLD_DEEPBIND-when-importing-the-LAL-SWIG-li.patch  # [linux]
 
 build:
   error_overlinking: true
