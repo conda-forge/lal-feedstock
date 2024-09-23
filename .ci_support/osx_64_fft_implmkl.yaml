@@ -26,6 +26,8 @@ macos_machine:
 - x86_64-apple-darwin13.4.0
 mkl:
 - '2024'
+mkl_devel:
+- '2024'
 numpy:
 - '2.0'
 - '2.0'
