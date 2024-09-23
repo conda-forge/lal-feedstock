@@ -24,13 +24,12 @@ hdf5:
 - 1.14.3
 macos_machine:
 - arm64-apple-darwin20.0.0
-mkl:
-- '2022'
+mkl_devel:
+- '2024'
 numpy:
 - '2.0'
 - '2.0'
 - '2.0'
-- '1.22'
 - '2.0'
 pin_run_as_build:
   python:
@@ -40,10 +39,8 @@ python:
 - 3.10.* *_cpython
 - 3.11.* *_cpython
 - 3.12.* *_cpython
-- 3.8.* *_cpython
 - 3.9.* *_cpython
 python_impl:
-- cpython
 - cpython
 - cpython
 - cpython
