@@ -92,7 +92,7 @@ outputs:
         - fftw * nompi*  # [fft_impl == "fftw"]
         - gsl
         - hdf5
-        - mkl-devel {{ mkl }}  # [fft_impl == "mkl"]
+        - mkl-devel      # [fft_impl == "mkl"]
         - zlib
       run:
         - fftw  # [fft_impl == "fftw"]
@@ -144,7 +144,8 @@ outputs:
       ignore_run_exports:
         - libzlib
         # things we declare to help the solver, but don't actually need
-        - mkl  # [fft_impl == "mkl"]
+      ignore_run_exports_from:
+        - mkl-devel  # [fft_impl == "mkl"]
       string: {{ fft_impl }}_py{{ py }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
     requirements:
       build:
@@ -166,7 +167,7 @@ outputs:
         - six
         - zlib
         # extras to help the solver:
-        - mkl-devel {{ mkl }}  # [fft_impl == "mkl"]
+        - mkl-devel        # [fft_impl == "mkl"]
       run:
         # NOTE: on linux, python-lal links the LAL dependencies
         #       as well so we have to list them here. why this
@@ -214,9 +215,9 @@ outputs:
     script: install-bin.sh
     build:
       error_overlinking: true
-      ignore_run_exports:
+      ignore_run_exports_from:
         # things we declare to help the solver, but don't actually need
-        - mkl
+        - mkl-devel
       string: {{ fft_impl }}_py{{ py }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
     requirements:
       build:
@@ -232,7 +233,7 @@ outputs:
         - python
         - {{ pin_subpackage('python-lal', exact=True) }}
         # extras to help the solver:
-        - mkl {{ mkl }}  # [fft_impl == "mkl"]
+        - mkl-devel  # [fft_impl == "mkl"]
       run:
         - fftw  # [fft_impl == "fftw"]
         - {{ pin_subpackage('liblal', exact=True) }}
