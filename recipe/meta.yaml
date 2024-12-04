@@ -107,19 +107,6 @@ outputs:
         # 7.1.1 is the version where the packages were restructured
         - lal >=7.1.1
         - python-lal >=7.1.1
-
-    about:
-      home: https://wiki.ligo.org/Computing/LALSuite
-      doc_url: https://lscsoft.docs.ligo.org/lalsuite/lal/
-      dev_url: https://git.ligo.org/lscsoft/lalsuite/
-      license: GPL-2.0-or-later
-      license_family: GPL
-      license_file: COPYING
-      summary: LSC Algorithm Library shared object libraries
-      description: |
-        The LSC Algorithm Library for gravitational wave data analysis.
-        This package contains the shared object libraries need to build
-        applications that use LAL.
     test:
       requires:
         - pkg-config
@@ -135,7 +122,6 @@ outputs:
       doc_url: https://lscsoft.docs.ligo.org/lalsuite/lal/
       dev_url: https://git.ligo.org/lscsoft/lalsuite.git
       license: GPL-2.0-or-later
-      license_family: GPL
       license_file: COPYING
       summary: LSC Algorithm Library shared object libraries
       description: |
@@ -204,7 +190,6 @@ outputs:
       doc_url: https://lscsoft.docs.ligo.org/lalsuite/lal/
       dev_url: https://git.ligo.org/lscsoft/lalsuite/
       license: GPL-2.0-or-later
-      license_family: GPL
       license_file: COPYING
       summary: LSC Algorithm Library Python bindings
       description: |
@@ -249,16 +234,6 @@ outputs:
         {% if not migrating %}
         - python-ligo-lw
         {% endif %}
-    about:
-      home: https://wiki.ligo.org/Computing/LALSuite
-      doc_url: https://lscsoft.docs.ligo.org/lalsuite/lal/
-      dev_url: https://git.ligo.org/lscsoft/lalsuite/
-      license: GPL-2.0-or-later
-      license_family: GPL
-      license_file: COPYING
-      summary: LSC Algorithm Library
-      description: |
-        The LSC Algorithm Library for gravitational wave data analysis.
     test:
       commands:
         - lal_fftw_wisdom --help  # [fft_impl == "fftw"]
@@ -273,13 +248,21 @@ outputs:
         - test "$(lal_tconvert Fri, 13 May 2005 06:13:07 +0000)" -eq 800000000  # [unix]
         - test "$(lal_tconvert 1831518865)" == "Tue Jan 19 03:14:07 UTC 2038"
         - test "$(lal_tconvert 1831518866)" == "Tue Jan 19 03:14:08 UTC 2038"
+    about:
+      home: https://wiki.ligo.org/Computing/LALSuite
+      doc_url: https://lscsoft.docs.ligo.org/lalsuite/lal/
+      dev_url: https://git.ligo.org/lscsoft/lalsuite/
+      license: GPL-2.0-or-later
+      license_file: COPYING
+      summary: LSC Algorithm Library
+      description: |
+        The LSC Algorithm Library for gravitational wave data analysis.
 
 about:
   home: https://wiki.ligo.org/Computing/LALSuite
   doc_url: https://lscsoft.docs.ligo.org/lalsuite/lal/
   dev_url: https://git.ligo.org/lscsoft/lalsuite/
   license: GPL-2.0-or-later
-  license_family: GPL
   license_file: COPYING
   summary: LSC Algorithm Library
   description: |
