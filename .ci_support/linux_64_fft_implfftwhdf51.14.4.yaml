@@ -1,19 +1,19 @@
-MACOSX_DEPLOYMENT_TARGET:
-- '11.0'
-MACOSX_SDK_VERSION:
-- '11.0'
 c_compiler:
-- clang
+- gcc
 c_compiler_version:
-- '17'
+- '13'
 c_stdlib:
-- macosx_deployment_target
+- sysroot
 c_stdlib_version:
-- '11.0'
+- '2.17'
+cdt_name:
+- conda
 channel_sources:
 - conda-forge
 channel_targets:
 - conda-forge main
+docker_image:
+- quay.io/condaforge/linux-anvil-x86_64:alma9
 fft_impl:
 - fftw
 fftw:
@@ -22,8 +22,6 @@ gsl:
 - '2.7'
 hdf5:
 - 1.14.4
-macos_machine:
-- arm64-apple-darwin20.0.0
 mkl:
 - '2022'
 numpy:
@@ -46,7 +44,7 @@ python_impl:
 - cpython
 - cpython
 target_platform:
-- osx-arm64
+- linux-64
 zip_keys:
 - - python
   - numpy
