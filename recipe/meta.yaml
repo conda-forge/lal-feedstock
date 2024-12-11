@@ -173,16 +173,11 @@ outputs:
         - freezegun
         - lscsoft-glue
         - pytest >=4.0
-        {% if not migrating %}
-        - python-ligo-lw
-        {% endif %}
+        - python{% if not migrating %}-ligo-lw{% endif %}
       source_files:
         - test/python
       commands:
-        - python -m pytest -ra -v test/python {% if migrating -%}
-              --ignore test/python/test_rate.py
-              -k 'not lal.rate and not lal.series'
-        {%- endif %}
+        - python -m pytest -ra -v test/python {% if migrating -%} --ignore test/python/test_rate.py -k 'not lal.rate and not lal.series' {%- endif %}
         # test regression for https://git.ligo.org/lscsoft/lalsuite/-/issues/478
         - python -c "import numpy; import lal; print(lal.CreateForwardREAL8FFTPlan(512, 1))"
     about:
@@ -231,17 +226,13 @@ outputs:
         - numpy
         - python
         - {{ pin_subpackage('python-lal', exact=True) }}
-        {% if not migrating %}
-        - python-ligo-lw
-        {% endif %}
+        - python{% if not migrating %}-ligo-lw{% endif %}
     test:
       commands:
         - lal_fftw_wisdom --help  # [fft_impl == "fftw"]
         - lal_fftwf_wisdom --help  # [fft_impl == "fftw"]
         - lal_path2cache <<< A-B-0-1.gwf
-        {% if not migrating %}
-        - lal_searchsum2cache --help
-        {% endif %}
+        - "{% if not migrating %}lal_searchsum2cache --help{% else %}true{% endif %}"
         - lal_simd_detect
         - lal_version --verbose
         - test "$(lal_tconvert --rfc-2822 800000000)" == "Fri, 13 May 2005 06:13:07 +0000"  # [unix]
