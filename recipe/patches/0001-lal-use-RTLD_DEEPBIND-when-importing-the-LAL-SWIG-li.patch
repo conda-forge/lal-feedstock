@@ -1,7 +1,8 @@
-From 8e3a6aafe572a99da48388fc7e750e5289379eb1 Mon Sep 17 00:00:00 2001
+From 233da52289d64bc0f2723c6260e1555c072cfd3d Mon Sep 17 00:00:00 2001
 From: "duncan.macleod" <duncan.macleod@ligo.org>
 Date: Wed, 29 Nov 2023 14:16:29 +0000
-Subject: [PATCH] lal: use RTLD_DEEPBIND when importing the LAL SWIG library
+Subject: [PATCH 1/4] lal: use RTLD_DEEPBIND when importing the LAL SWIG
+ library
 
 so that we avoid collisions with FFTW symbols from MKL within the global namespace,
 closes #300,
@@ -36,5 +37,5 @@ index 38fdb8f545..dd61cc0249 100644
  @SWIG_BUILD_PYTHON_TRUE@try:
  @SWIG_BUILD_PYTHON_TRUE@    get_ipython()
 -- 
-2.39.2
+2.39.5
 
