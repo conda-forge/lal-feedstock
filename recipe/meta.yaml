@@ -2,7 +2,7 @@
 {% set version = "7.6.0" %}
 
 # define build number
-{% set build = 1 %}
+{% set build = 2 %}
 
 # default FFT implememntation to FFTW
 {% if fft_impl is not defined %}
@@ -47,7 +47,13 @@ source:
     #     git add recipe/patches/*.patch
     #     <update-this-file-as-required>
 
+    # see https://git.ligo.org/lscsoft/lalsuite/-/issues/300
     - patches/0001-lal-use-RTLD_DEEPBIND-when-importing-the-LAL-SWIG-li.patch  # [linux]
+    # backport https://git.ligo.org/lscsoft/lalsuite/-/merge_requests/2364
+    - patches/0002-common-swig-generate_swig_iface.py-prefer-stringval-.patch
+    - patches/0003-lal-swig-SWIGCommon.i-refactor-SWIGLAL_MAYBE_RETURN_.patch
+    - patches/0004-lal-swig-SWIGTestLALPython.py-use-catch_errors-wrapp.patch
+
 
 build:
   error_overlinking: true
@@ -101,19 +107,6 @@ outputs:
         # 7.1.1 is the version where the packages were restructured
         - lal >=7.1.1
         - python-lal >=7.1.1
-
-    about:
-      home: https://wiki.ligo.org/Computing/LALSuite
-      doc_url: https://lscsoft.docs.ligo.org/lalsuite/lal/
-      dev_url: https://git.ligo.org/lscsoft/lalsuite/
-      license: GPL-2.0-or-later
-      license_family: GPL
-      license_file: COPYING
-      summary: LSC Algorithm Library shared object libraries
-      description: |
-        The LSC Algorithm Library for gravitational wave data analysis.
-        This package contains the shared object libraries need to build
-        applications that use LAL.
     test:
       requires:
         - pkg-config
@@ -129,7 +122,6 @@ outputs:
       doc_url: https://lscsoft.docs.ligo.org/lalsuite/lal/
       dev_url: https://git.ligo.org/lscsoft/lalsuite.git
       license: GPL-2.0-or-later
-      license_family: GPL
       license_file: COPYING
       summary: LSC Algorithm Library shared object libraries
       description: |
@@ -181,16 +173,11 @@ outputs:
         - freezegun
         - lscsoft-glue
         - pytest >=4.0
-        {% if not migrating %}
-        - python-ligo-lw
-        {% endif %}
+        - python{% if not migrating %}-ligo-lw{% endif %}
       source_files:
         - test/python
       commands:
-        - python -m pytest -ra -v test/python {% if migrating -%}
-              --ignore test/python/test_rate.py
-              -k 'not lal.rate and not lal.series'
-        {%- endif %}
+        - python -m pytest -ra -v test/python {% if migrating -%} --ignore test/python/test_rate.py -k 'not lal.rate and not lal.series' {%- endif %}
         # test regression for https://git.ligo.org/lscsoft/lalsuite/-/issues/478
         - python -c "import numpy; import lal; print(lal.CreateForwardREAL8FFTPlan(512, 1))"
     about:
@@ -198,7 +185,6 @@ outputs:
       doc_url: https://lscsoft.docs.ligo.org/lalsuite/lal/
       dev_url: https://git.ligo.org/lscsoft/lalsuite/
       license: GPL-2.0-or-later
-      license_family: GPL
       license_file: COPYING
       summary: LSC Algorithm Library Python bindings
       description: |
@@ -240,40 +226,34 @@ outputs:
         - numpy
         - python
         - {{ pin_subpackage('python-lal', exact=True) }}
-        {% if not migrating %}
-        - python-ligo-lw
-        {% endif %}
-    about:
-      home: https://wiki.ligo.org/Computing/LALSuite
-      doc_url: https://lscsoft.docs.ligo.org/lalsuite/lal/
-      dev_url: https://git.ligo.org/lscsoft/lalsuite/
-      license: GPL-2.0-or-later
-      license_family: GPL
-      license_file: COPYING
-      summary: LSC Algorithm Library
-      description: |
-        The LSC Algorithm Library for gravitational wave data analysis.
+        - python{% if not migrating %}-ligo-lw{% endif %}
     test:
       commands:
         - lal_fftw_wisdom --help  # [fft_impl == "fftw"]
         - lal_fftwf_wisdom --help  # [fft_impl == "fftw"]
         - lal_path2cache <<< A-B-0-1.gwf
-        {% if not migrating %}
-        - lal_searchsum2cache --help
-        {% endif %}
+        - "{% if not migrating %}lal_searchsum2cache --help{% else %}true{% endif %}"
         - lal_simd_detect
         - lal_version --verbose
         - test "$(lal_tconvert --rfc-2822 800000000)" == "Fri, 13 May 2005 06:13:07 +0000"  # [unix]
         - test "$(lal_tconvert Fri, 13 May 2005 06:13:07 +0000)" -eq 800000000  # [unix]
         - test "$(lal_tconvert 1831518865)" == "Tue Jan 19 03:14:07 UTC 2038"
         - test "$(lal_tconvert 1831518866)" == "Tue Jan 19 03:14:08 UTC 2038"
+    about:
+      home: https://wiki.ligo.org/Computing/LALSuite
+      doc_url: https://lscsoft.docs.ligo.org/lalsuite/lal/
+      dev_url: https://git.ligo.org/lscsoft/lalsuite/
+      license: GPL-2.0-or-later
+      license_file: COPYING
+      summary: LSC Algorithm Library
+      description: |
+        The LSC Algorithm Library for gravitational wave data analysis.
 
 about:
   home: https://wiki.ligo.org/Computing/LALSuite
   doc_url: https://lscsoft.docs.ligo.org/lalsuite/lal/
   dev_url: https://git.ligo.org/lscsoft/lalsuite/
   license: GPL-2.0-or-later
-  license_family: GPL
   license_file: COPYING
   summary: LSC Algorithm Library
   description: |
