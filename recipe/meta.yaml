@@ -2,7 +2,7 @@
 {% set version = "7.6.0" %}
 
 # define build number
-{% set build = 2 %}
+{% set build = 3 %}
 
 # default FFT implememntation to FFTW
 {% if fft_impl is not defined %}
@@ -133,7 +133,17 @@ outputs:
     script: build-python.sh
     build:
       error_overlinking: true
+      force_use_keys:
+        # force this package to use the same keys as liblal so that
+        # we ensure a unique python-lal build string for each unique
+        # liblal build
+        - fftw  # [fft_impl == "fftw"]
+        - gsl
+        - hdf5
+        - mkl  # [fft_impl == "mkl"]
+        - zlib
       ignore_run_exports:
+        # needed by ./configure but not linked by python-lal
         - libzlib
         # things we declare to help the solver, but don't actually need
         - mkl  # [fft_impl == "mkl"]
@@ -200,6 +210,14 @@ outputs:
     script: install-bin.sh
     build:
       error_overlinking: true
+      force_use_keys:
+        # force this package to use the same keys as liblal so that
+        # we ensure a unique lal build string for each unique liblal build
+        - fftw  # [fft_impl == "fftw"]
+        - gsl
+        - hdf5
+        - mkl  # [fft_impl == "mkl"]
+        - zlib
       ignore_run_exports:
         # things we declare to help the solver, but don't actually need
         - mkl
@@ -218,7 +236,7 @@ outputs:
         - python
         - {{ pin_subpackage('python-lal', exact=True) }}
         # extras to help the solver:
-        - mkl {{ mkl }}  # [fft_impl == "mkl"]
+        - mkl-devel {{ mkl }}  # [fft_impl == "mkl"]
       run:
         - fftw  # [fft_impl == "fftw"]
         - {{ pin_subpackage('liblal', exact=True) }}
