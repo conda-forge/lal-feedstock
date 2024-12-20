@@ -1,8 +1,8 @@
 {% set name = "lal" %}
-{% set version = "7.6.0" %}
+{% set version = "7.6.1" %}
 
 # define build number
-{% set build = 3 %}
+{% set build = 0 %}
 
 # default FFT implememntation to FFTW
 {% if fft_impl is not defined %}
@@ -18,8 +18,8 @@
 {% set swig_version = "3.0.10" %}
 
 # avoid circular imports that would break migrations
-{% set migrating = False %}
-{% set migrating = True %}  # [python_impl!='cpython' or py>=313]
+{% set migrating = false %}
+{% set migrating = true %}  # [python_impl!='cpython' or py>=313]
 
 package:
   name: {{ name }}-split
@@ -27,7 +27,7 @@ package:
 
 source:
   url: https://software.igwn.org/sources/source/lalsuite/{{ name }}-{{ version }}.tar.xz
-  sha256: c173ff3112065706dc0ad1cc5062b32ae72a25de1a079bad9d198f657b82e463
+  sha256: 56eacde7a803f341011d5953dd3ca5da0de0d58b0a34ee07fdb0900662bcf3bf
   patches:
     # to update the patches for a new release:
     #
@@ -49,10 +49,6 @@ source:
 
     # see https://git.ligo.org/lscsoft/lalsuite/-/issues/300
     - patches/0001-lal-use-RTLD_DEEPBIND-when-importing-the-LAL-SWIG-li.patch  # [linux]
-    # backport https://git.ligo.org/lscsoft/lalsuite/-/merge_requests/2364
-    - patches/0002-common-swig-generate_swig_iface.py-prefer-stringval-.patch
-    - patches/0003-lal-swig-SWIGCommon.i-refactor-SWIGLAL_MAYBE_RETURN_.patch
-    - patches/0004-lal-swig-SWIGTestLALPython.py-use-catch_errors-wrapp.patch
 
 
 build:
