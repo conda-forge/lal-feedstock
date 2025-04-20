@@ -8,36 +8,20 @@ jobs:
     vmImage: ubuntu-latest
   strategy:
     matrix:
-      linux_64_fft_implfftwhdf51.14.3:
-        CONFIG: linux_64_fft_implfftwhdf51.14.3
+      linux_64_fft_implfftw:
+        CONFIG: linux_64_fft_implfftw
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-x86_64:alma9
-      linux_64_fft_implfftwhdf51.14.4:
-        CONFIG: linux_64_fft_implfftwhdf51.14.4
+      linux_64_fft_implmkl:
+        CONFIG: linux_64_fft_implmkl
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-x86_64:alma9
-      linux_64_fft_implmklhdf51.14.3:
-        CONFIG: linux_64_fft_implmklhdf51.14.3
+      linux_aarch64_:
+        CONFIG: linux_aarch64_
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-x86_64:alma9
-      linux_64_fft_implmklhdf51.14.4:
-        CONFIG: linux_64_fft_implmklhdf51.14.4
-        UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-x86_64:alma9
-      linux_aarch64_hdf51.14.3:
-        CONFIG: linux_aarch64_hdf51.14.3
-        UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-x86_64:alma9
-      linux_aarch64_hdf51.14.4:
-        CONFIG: linux_aarch64_hdf51.14.4
-        UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-x86_64:alma9
-      linux_ppc64le_hdf51.14.3:
-        CONFIG: linux_ppc64le_hdf51.14.3
-        UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-x86_64:alma9
-      linux_ppc64le_hdf51.14.4:
-        CONFIG: linux_ppc64le_hdf51.14.4
+      linux_ppc64le_:
+        CONFIG: linux_ppc64le_
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-x86_64:alma9
   timeoutInMinutes: 360
