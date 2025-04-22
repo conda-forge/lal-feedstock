@@ -65,9 +65,10 @@ requirements:
   build:
     - {{ compiler('c') }}
     - {{ stdlib("c") }}
-    - pkg-config >=0.18.0
-    - make
     - bc
+    - diffutils
+    - make
+    - pkg-config >=0.18.0
     - swig >={{ swig_version }}
   host:
     - fftw * nompi*  # [fft_impl == "fftw"]
