@@ -1,5 +1,5 @@
 {% set name = "lal" %}
-{% set version = "7.6.1" %}
+{% set version = "7.7.0" %}
 
 # define build number
 {% set build = 1 %}
@@ -27,7 +27,7 @@ package:
 
 source:
   url: https://software.igwn.org/sources/source/lalsuite/{{ name }}-{{ version }}.tar.xz
-  sha256: 56eacde7a803f341011d5953dd3ca5da0de0d58b0a34ee07fdb0900662bcf3bf
+  sha256: 37a6abda137ea8319bff4d5f3018adc79bb0a007344f8bd512a14192ccfde12b
   patches:
     # to update the patches for a new release:
     #
@@ -171,16 +171,16 @@ outputs:
         #       as well so we have to list them here. why this
         #       doesn't happen on osx, I'm not sure.
         - {{ pin_subpackage('liblal', exact=True) }}
-        - ligo-segments
+        - igwn-segments
         - python
         - python-dateutil
         - scipy
     test:
       requires:
         - freezegun
+        - igwn-ligolw  # [not migrating]
         - lscsoft-glue
         - pytest >=4.0
-        - python{% if not migrating %}-ligo-lw{% endif %}
       source_files:
         - test/python
       commands:
@@ -229,7 +229,7 @@ outputs:
       host:
         - fftw  # [fft_impl == "fftw"]
         - {{ pin_subpackage('liblal', exact=True) }}
-        - ligo-segments
+        - igwn-segments
         - python
         - {{ pin_subpackage('python-lal', exact=True) }}
         # extras to help the solver:
@@ -237,11 +237,11 @@ outputs:
       run:
         - fftw  # [fft_impl == "fftw"]
         - {{ pin_subpackage('liblal', exact=True) }}
-        - ligo-segments
+        - igwn-ligolw  # [not migrating]
+        - igwn-segments
         - numpy
         - python
         - {{ pin_subpackage('python-lal', exact=True) }}
-        - python{% if not migrating %}-ligo-lw{% endif %}
     test:
       commands:
         - lal_fftw_wisdom --help  # [fft_impl == "fftw"]
