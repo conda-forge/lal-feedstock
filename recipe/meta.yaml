@@ -2,7 +2,7 @@
 {% set version = "7.7.0" %}
 
 # define build number
-{% set build = 0 %}
+{% set build = 1 %}
 
 # default FFT implememntation to FFTW
 {% if fft_impl is not defined %}
@@ -65,9 +65,10 @@ requirements:
   build:
     - {{ compiler('c') }}
     - {{ stdlib("c") }}
-    - pkg-config >=0.18.0
-    - make
     - bc
+    - diffutils
+    - make
+    - pkg-config >=0.18.0
     - swig >={{ swig_version }}
   host:
     - fftw * nompi*  # [fft_impl == "fftw"]
