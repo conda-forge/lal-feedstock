@@ -1,0 +1,29 @@
+From 0d406d5c4ae207109244eeee81b6019537fb3a7d Mon Sep 17 00:00:00 2001
+From: Karl Wette <karl.wette@ligo.org>
+Date: Mon, 27 Oct 2025 16:34:07 +1100
+Subject: [PATCH 3/3] lal/swig/SWIGPython.i: SwigPyObject_type was renamed to
+ SwigPyObject_Type in v4.4.0
+
+---
+ lal/swig/SWIGPython.i | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/lal/swig/SWIGPython.i b/lal/swig/SWIGPython.i
+index 63209957e2..9ea1633b9d 100644
+--- a/lal/swig/SWIGPython.i
++++ b/lal/swig/SWIGPython.i
+@@ -864,7 +864,11 @@ SWIGINTERN bool swiglal_release_parent(void *ptr) {
+       } else {
+         PyArray_DescrProto src = {
+           PyObject_HEAD_INIT(&PyArrayDescr_Type)
++#if SWIG_VERSION >= 0x040400
++          .typeobj = SwigPyObject_Type(),
++#else
+           .typeobj = SwigPyObject_type(),
++#endif
+           .kind = 'V',
+           .type = 'V',
+           .byteorder = '=',
+-- 
+2.39.5
+
