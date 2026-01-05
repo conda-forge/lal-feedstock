@@ -49,6 +49,9 @@ source:
 
     # see https://git.ligo.org/lscsoft/lalsuite/-/issues/300
     - patches/0001-lal-use-RTLD_DEEPBIND-when-importing-the-LAL-SWIG-li.patch  # [linux]
+    # backport https://git.ligo.org/lscsoft/lalsuite/-/merge_requests/2529
+    - patches/0002-lal-swig-SWIGPython.i-use-import_array1-0-to-import-.patch
+    - patches/0003-lal-swig-SWIGPython.i-SwigPyObject_type-was-renamed-.patch
 
 
 build:
