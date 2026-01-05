@@ -99,11 +99,14 @@ outputs:
         - gsl
         - hdf5
         - mkl-devel {{ mkl }}  # [fft_impl == "mkl"]
+        - swig >={{ swig_version }}
         - zlib
       run:
         - fftw  # [fft_impl == "fftw"]
         - gsl
       run_constrained:
+        # building against lal-swig requires the same version of swig
+        - {{ pin_compatible('swig', max_pin='x.x.x') }}
         # 7.1.1 is the version where the packages were restructured
         - lal >=7.1.1
         - python-lal >=7.1.1
