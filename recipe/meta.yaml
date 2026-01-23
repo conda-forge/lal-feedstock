@@ -184,7 +184,7 @@ outputs:
     test:
       requires:
         - freezegun
-        - igwn-ligolw  # [not migrating]
+        - igwn-ligolw <2.1.1  # [not migrating]
         - lscsoft-glue
         - pytest >=4.0
       source_files:
