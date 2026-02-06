@@ -17,10 +17,6 @@
 # dependency versions
 {% set swig_version = "3.0.10" %}
 
-# avoid circular imports that would break migrations
-{% set migrating = false %}
-{% set migrating = true %}  # [python_impl!='cpython' or py>=313]
-
 package:
   name: {{ name }}-split
   version: {{ version }}
@@ -184,13 +180,14 @@ outputs:
     test:
       requires:
         - freezegun
-        - igwn-ligolw <2.1.1  # [not migrating]
         - lscsoft-glue
         - pytest >=4.0
       source_files:
         - test/python
       commands:
-        - python -m pytest -ra -v test/python {% if migrating -%} --ignore test/python/test_rate.py -k 'not lal.rate and not lal.series' {%- endif %}
+        # Run the test suite, but exclude tests that depend on igwn-ligolw
+        - "export PYTEST_ADDOPTS=\"--ignore test/python/test_rate.py --ignore test/python/test_series.py -k 'not lal.rate and not lal.series'\""
+        - python -m pytest -ra -v test/python
         # test regression for https://git.ligo.org/lscsoft/lalsuite/-/issues/478
         - python -c "import numpy; import lal; print(lal.CreateForwardREAL8FFTPlan(512, 1))"
     about:
@@ -243,7 +240,6 @@ outputs:
       run:
         - fftw  # [fft_impl == "fftw"]
         - {{ pin_subpackage('liblal', exact=True) }}
-        - igwn-ligolw  # [not migrating]
         - igwn-segments
         - numpy
         - python
@@ -253,7 +249,6 @@ outputs:
         - lal_fftw_wisdom --help  # [fft_impl == "fftw"]
         - lal_fftwf_wisdom --help  # [fft_impl == "fftw"]
         - lal_path2cache <<< A-B-0-1.gwf
-        - "{% if not migrating %}lal_searchsum2cache --help{% else %}true{% endif %}"
         - lal_simd_detect
         - lal_version --verbose
         - test "$(lal_tconvert --rfc-2822 800000000)" == "Fri, 13 May 2005 06:13:07 +0000"  # [unix]
