@@ -33,8 +33,7 @@ python:
 - 3.11.* *_cpython
 - 3.12.* *_cpython
 - 3.13.* *_cp313
-python_impl:
-- cpython
+- 3.14.* *_cp314
 target_platform:
 - linux-64
 zlib:
