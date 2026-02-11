@@ -2,7 +2,7 @@
 {% set version = "7.7.0" %}
 
 # define build number
-{% set build = 1 %}
+{% set build = 2 %}
 
 # default FFT implememntation to FFTW
 {% if fft_impl is not defined %}
@@ -49,6 +49,9 @@ source:
 
     # see https://git.ligo.org/lscsoft/lalsuite/-/issues/300
     - patches/0001-lal-use-RTLD_DEEPBIND-when-importing-the-LAL-SWIG-li.patch  # [linux]
+    # backport https://git.ligo.org/lscsoft/lalsuite/-/merge_requests/2529
+    - patches/0002-lal-swig-SWIGPython.i-use-import_array1-0-to-import-.patch
+    - patches/0003-lal-swig-SWIGPython.i-SwigPyObject_type-was-renamed-.patch
 
 
 build:
@@ -96,11 +99,14 @@ outputs:
         - gsl
         - hdf5
         - mkl-devel {{ mkl }}  # [fft_impl == "mkl"]
+        - swig >={{ swig_version }}
         - zlib
       run:
         - fftw  # [fft_impl == "fftw"]
         - gsl
       run_constrained:
+        # building against lal-swig requires the same version of swig
+        - {{ pin_compatible('swig', max_pin='x.x.x') }}
         # 7.1.1 is the version where the packages were restructured
         - lal >=7.1.1
         - python-lal >=7.1.1
@@ -178,7 +184,7 @@ outputs:
     test:
       requires:
         - freezegun
-        - igwn-ligolw  # [not migrating]
+        - igwn-ligolw <2.1.1  # [not migrating]
         - lscsoft-glue
         - pytest >=4.0
       source_files:
