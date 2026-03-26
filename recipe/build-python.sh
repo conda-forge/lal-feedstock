@@ -31,7 +31,7 @@ ${_make} -C python LIBS=""
 
 # test
 if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" ]]; then
-	${_make} check -C swig
+  ${_make} check -C swig
 fi
 
 # install
