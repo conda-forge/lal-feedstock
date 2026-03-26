@@ -15,7 +15,7 @@
 {% endif %}
 
 # dependency versions
-{% set swig_version = "4.3.1" %}
+{% set swig_version = "4.4.1" %}
 
 package:
   name: {{ name }}-split
