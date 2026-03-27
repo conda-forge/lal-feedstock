@@ -8,4 +8,7 @@ conda_forge_output_validation: true
 github:
   branch_name: main
   tooling_branch_name: main
+provider:
+  osx_64: azure
+  osx_arm64: azure
 test: native_and_emulated

@@ -15,7 +15,7 @@
 {% endif %}
 
 # dependency versions
-{% set swig_version = "3.0.10" %}
+{% set swig_version = "4.4.1" %}
 
 package:
   name: {{ name }}-split
@@ -68,7 +68,7 @@ requirements:
     - diffutils
     - make
     - pkg-config >=0.18.0
-    - swig >={{ swig_version }}
+    - swig {{ swig_version }}.*
   host:
     - fftw * nompi*  # [fft_impl == "fftw"]
     - gsl
@@ -89,13 +89,13 @@ outputs:
         - {{ compiler('c') }}
         - {{ stdlib("c") }}
         - make  # [not win]
-        - swig >={{ swig_version }}
+        - swig {{ swig_version }}.*
       host:
         - fftw * nompi*  # [fft_impl == "fftw"]
         - gsl
         - hdf5
         - mkl-devel {{ mkl }}  # [fft_impl == "mkl"]
-        - swig >={{ swig_version }}
+        - swig {{ swig_version }}.*
         - zlib
       run:
         - fftw  # [fft_impl == "fftw"]
@@ -154,7 +154,7 @@ outputs:
         - help2man >=1.37
         - make
         - pkg-config >=0.18.0
-        - swig >={{ swig_version }}
+        - swig {{ swig_version }}.*
         # extras for cross-compilation:
         - cross-python_{{ target_platform }}  # [build_platform != target_platform]
         - numpy                               # [build_platform != target_platform]
