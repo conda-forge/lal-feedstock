@@ -19,7 +19,7 @@ fft_impl:
 fftw:
 - '3'
 gsl:
-- '2.7'
+- '2.8'
 hdf5:
 - '2'
 macos_machine:
