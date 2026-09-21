@@ -1,7 +1,7 @@
 About lal-feedstock
 ===================
 
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/rattler-feedstock/blob/main/LICENSE.txt)
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/lal-feedstock/blob/main/LICENSE.txt)
 
 
 About lal
@@ -64,8 +64,8 @@ Current build status
 <table><tr>
     <td>GitHub Actions</td>
     <td>
-      <a href="https://github.com/conda-forge/rattler-feedstock/actions/workflows/conda-build.yml">
-        <img src="https://github.com/conda-forge/rattler-feedstock/actions/workflows/conda-build.yml/badge.svg?event=push&branch=main">
+      <a href="https://github.com/conda-forge/lal-feedstock/actions/workflows/conda-build.yml">
+        <img src="https://github.com/conda-forge/lal-feedstock/actions/workflows/conda-build.yml/badge.svg?event=push&branch=main">
       </a>
     </td>
   </tr>
@@ -75,8 +75,8 @@ Current build status
     <td>
       <details>
         <summary>
-          <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=27840&branchName=main">
-            <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/rattler-feedstock?branchName=main">
+          <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=3989&branchName=main">
+            <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/lal-feedstock?branchName=main">
           </a>
         </summary>
         <table>
@@ -84,43 +84,43 @@ Current build status
           <tbody><tr>
               <td>osx_64_fft_implfftwhdf51.14.6</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=27840&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/rattler-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_fft_implfftwhdf51.14.6" alt="variant">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=3989&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/lal-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_fft_implfftwhdf51.14.6" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>osx_64_fft_implfftwhdf52</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=27840&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/rattler-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_fft_implfftwhdf52" alt="variant">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=3989&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/lal-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_fft_implfftwhdf52" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>osx_64_fft_implmklhdf51.14.6</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=27840&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/rattler-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_fft_implmklhdf51.14.6" alt="variant">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=3989&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/lal-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_fft_implmklhdf51.14.6" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>osx_64_fft_implmklhdf52</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=27840&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/rattler-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_fft_implmklhdf52" alt="variant">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=3989&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/lal-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_fft_implmklhdf52" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>osx_arm64_hdf51.14.6</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=27840&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/rattler-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_hdf51.14.6" alt="variant">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=3989&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/lal-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_hdf51.14.6" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>osx_arm64_hdf52</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=27840&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/rattler-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_hdf52" alt="variant">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=3989&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/lal-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_hdf52" alt="variant">
                 </a>
               </td>
             </tr>
