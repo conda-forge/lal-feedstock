@@ -2,7 +2,7 @@ schema_version: 1
 
 context:
   version: "7.7.0"
-  build_number: 6
+  build_number: 7
   # dependencies
   swig_version: 4.4.1
 
