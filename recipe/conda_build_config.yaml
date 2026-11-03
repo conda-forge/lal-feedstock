@@ -1,5 +1,7 @@
 fft_impl:
   - fftw
   - mkl  # [x86_64]
-mkl:
+fftw:
+  - 3.* nompi*
+mkl_devel:
   - 2022

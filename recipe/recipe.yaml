@@ -1,0 +1,311 @@
+schema_version: 1
+
+context:
+  version: "7.7.0"
+  build_number: 6
+  # dependencies
+  swig_version: 4.4.1
+
+recipe:
+  name: lal-split
+  version: ${{ version }}
+
+source:
+  - url: https://software.igwn.org/sources/source/lalsuite/lal-${{ version }}.tar.xz
+    sha256: 37a6abda137ea8319bff4d5f3018adc79bb0a007344f8bd512a14192ccfde12b
+    patches:
+      # to update the patches for a new release:
+      #
+      #     # -- checkout the new source release tag
+      #     cd /path/to/git/lalsuite
+      #     git fetch
+      #     git checkout <release-tag>
+      #     # -- apply the patches on top of the release tag
+      #     git am --3way /path/to/git/lal-feedstock/recipe/patches/*.patch
+      #     <resolve-any-conflicts>
+      #     # -- render new patch files
+      #     git format-patch <release-tag> lal/ -o lal-patches
+      #     # -- copy them back to the feedstock
+      #     cd /path/to/git/lal-feedstock
+      #     git rm recipe/patches/*.patch
+      #     cp /path/to/git/lalsuite/lal-patches/*.patch recipe/patches/
+      #     git add recipe/patches/*.patch
+      #     <update-this-file-as-required>
+
+      # see https://git.ligo.org/lscsoft/lalsuite/-/issues/300
+      - if: linux
+        then:
+          - patches/0001-lal-use-RTLD_DEEPBIND-when-importing-the-LAL-SWIG-li.patch
+      # backport https://git.ligo.org/lscsoft/lalsuite/-/merge_requests/2529
+      - patches/0002-lal-swig-SWIGPython.i-use-import_array1-0-to-import-.patch
+      - patches/0003-lal-swig-SWIGPython.i-SwigPyObject_type-was-renamed-.patch
+
+build:
+  number: ${{ build_number | int + 100 if fft_impl == "fftw" else build_number }}
+  skip:
+    - win
+
+outputs:
+
+  # -- Staging -----------------------
+
+  - staging:
+      name: lal-c-build
+    build:
+      script: build.sh
+    requirements:
+      build:
+        - ${{ compiler('c') }}
+        - ${{ stdlib('c') }}
+        - bc
+        - diffutils
+        - make
+        - pkg-config >=0.18.0
+        # needed by ./configure, the version constraint prevents python
+        # being treated as a variant key for the staging output
+        - python >=3.6
+        - swig ${{ swig_version }}.*
+      host:
+        - gsl
+        - hdf5
+        - zlib
+        - if: fft_impl == "fftw"
+          then: fftw
+        - if: fft_impl == "mkl"
+          then: mkl-devel
+
+  # -- Packages ----------------------
+
+  - package:
+      name: liblal
+    inherit: lal-c-build
+    build:
+      dynamic_linking:
+        overdepending_behavior: error
+      files:
+        - include/lal/
+        - lib/liblal*
+        - lib/pkgconfig/lal*.pc
+      string: ${{ fft_impl }}_h${{ hash }}_${{ build_number }}
+    requirements:
+      build:
+        - ${{ compiler('c') }}
+        - ${{ stdlib('c') }}
+      run_exports:
+        - ${{ pin_subpackage("liblal", upper_bound="x") }}
+      run_constraints:
+        # building against lal-swig requires the same version of swig
+        - swig ${{ swig_version }}.*
+        # 7.1.1 is the version where the packages were restructured
+        - lal >=7.1.1
+        - python-lal >=7.1.1
+    tests:
+      - package_contents:
+          include:
+            - lal/LALConfig.h
+            - lal/SWIGCommon.i
+          lib:
+            - lal
+            - lalsupport
+      - requirements:
+          run:
+            - pkg-config
+        script:
+          - pkg-config --print-errors --exact-version "${PKG_VERSION}" lal
+          - pkg-config --print-errors --exact-version "${PKG_VERSION}" lalsupport
+    about:
+      summary: LSC Algorithm Library shared object libraries
+      description: |
+        The LSC Algorithm Library for gravitational wave data analysis.
+        This package contains the shared-object libraries needed to run
+        applications that use the LAL library.
+
+  - package:
+      name: python-lal
+    inherit:
+      from: lal-c-build
+      run_exports: false
+    build:
+      dynamic_linking:
+        overdepending_behavior: error
+      files:
+        - lib/python*/site-packages/
+      script: build-python.sh
+      string: ${{ fft_impl }}_py${{ python | version_to_buildstring }}h${{ hash }}_${{ build_number }}
+      variant:
+        # use the same keys as liblal so that we ensure a unique
+        # python-lal build string for each unique liblal build
+        use_keys:
+          - gsl
+          - hdf5
+          - zlib
+          - if: fft_impl == "fftw"
+            then: fftw
+          - if: fft_impl == "mkl"
+            then: mkl
+
+    requirements:
+      build:
+        - ${{ compiler('c') }}
+        - ${{ stdlib('c') }}
+        - make
+        - pkg-config >=0.18.0
+        - swig ${{ swig_version }}.*
+        - if: build_platform != target_platform
+          then:
+            - cross-python_${{ target_platform }}
+            - numpy
+            - python
+      host:
+        - ${{ pin_subpackage("liblal", exact=True) }}
+        - numpy
+        - python
+        # needed by ./configure
+        - if: fft_impl == "mkl"
+          then: mkl-include
+        - zlib
+        # needed by the test suite
+        - if: build_platform == target_platform
+          then:
+            - pytest
+      run:
+        - ${{ pin_subpackage("liblal", exact=True) }}
+        - igwn-segments
+        - python
+        - python-dateutil
+        - scipy
+      ignore_run_exports:
+        by_name:
+          # needed by ./configure but not linked by python-lal
+          - libzlib
+    tests:
+      - python:
+          imports:
+            - lal
+            - lal.utils
+          pip_check: false
+      - requirements:
+          run:
+            - freezegun
+            - lscsoft-glue
+            - pytest >=4.0
+        files:
+          source:
+            - test/python/
+        script:
+          # run the test suite, but exclude tests that depend on igwn-ligolw
+          - "export PYTEST_ADDOPTS=\"--ignore test/python/test_rate.py --ignore test/python/test_series.py -k 'not lal.rate and not lal.series'\""
+          - python -m pytest -ra -v test/python
+          # test regression for https://git.ligo.org/lscsoft/lalsuite/-/issues/478
+          - python -c "import numpy; import lal; print(lal.CreateForwardREAL8FFTPlan(512, 1))"
+    about:
+      summary: LSC Algorithm Library Python bindings
+      description: |
+        The LSC Algorithm Library for gravitational wave data analysis.
+        This package contains the Python bindings of the LAL C libraries
+        and additional Python modules.
+
+        Note: this package only provides the importable Python libraries.
+        All command-line interfaces, scripts, and executables are
+        part of the `lal` package.
+
+  - package:
+      name: lal
+    inherit:
+      from: lal-c-build
+      run_exports: false
+    build:
+      dynamic_linking:
+        overdepending_behavior: error
+      files:
+        - bin/
+        - etc/lal-user-env.*
+        - share/man/
+      script: install-bin.sh
+      string: ${{ fft_impl }}_py${{ python | version_to_buildstring }}h${{ hash }}_${{ build_number }}
+      variant:
+        # use the same keys as liblal so that we ensure a unique
+        # lal build string for each unique liblal build
+        use_keys:
+          - gsl
+          - hdf5
+          - zlib
+          - if: fft_impl == "fftw"
+            then: fftw
+          - if: fft_impl == "mkl"
+            then: mkl
+
+    requirements:
+      build:
+        - ${{ compiler('c') }}
+        - ${{ stdlib('c') }}
+        - help2man >=1.37
+        - make
+        - pkg-config >=0.18.0
+        - rsync
+        - sed
+        - swig ${{ swig_version }}.*
+        - if: build_platform != target_platform
+          then:
+            - cross-python_${{ target_platform }}
+            - numpy
+            - python
+      host:
+        - ${{ pin_subpackage("liblal", exact=True) }}
+        - ${{ pin_subpackage("python-lal", exact=True) }}
+        - igwn-segments
+        - numpy
+        - python
+        # needed by ./configure
+        - if: fft_impl == "fftw"
+          then: fftw
+        - if: fft_impl == "mkl"
+          then: mkl-include
+        - zlib
+      run:
+        - ${{ pin_subpackage("liblal", exact=True) }}
+        - ${{ pin_subpackage("python-lal", exact=True) }}
+        - igwn-segments
+        - numpy
+        - python
+      ignore_run_exports:
+        by_name:
+          # needed by ./configure but not linked by lal
+          - libzlib
+    tests:
+      - script:
+          - if: fft_impl == "fftw"
+            then:
+              - lal_fftw_wisdom --help
+              - lal_fftwf_wisdom --help
+          - lal_path2cache <<< A-B-0-1.gwf
+          - lal_simd_detect
+          - lal_version --verbose
+          - test "$(lal_tconvert --rfc-2822 800000000)" == "Fri, 13 May 2005 06:13:07 +0000"
+          - test "$(lal_tconvert Fri, 13 May 2005 06:13:07 +0000)" -eq 800000000
+          - test "$(lal_tconvert 1831518865)" == "Tue Jan 19 03:14:07 UTC 2038"
+          - test "$(lal_tconvert 1831518866)" == "Tue Jan 19 03:14:08 UTC 2038"
+    about:
+      summary: LSC Algorithm Library
+      description: |
+        The LSC Algorithm Library for gravitational wave data analysis.
+
+about:
+  summary: LSC Algorithm Library
+  description: |
+    The LSC Algorithm Library for gravitational wave data analysis.
+    This package contains the shared-object libraries needed to run
+    applications that use the LAL library.  If you want to install
+    the Python bindings, please install the associated python-lal
+    package.
+  homepage: https://wiki.ligo.org/Computing/LALSuite
+  documentation: https://lscsoft.docs.ligo.org/lalsuite/lal/
+  repository: https://git.ligo.org/lscsoft/lalsuite/
+  license: GPL-2.0-or-later
+  license_file: COPYING
+
+extra:
+  feedstock-name: lal
+  recipe-maintainers:
+    - duncanmmacleod
+    - skymoo
