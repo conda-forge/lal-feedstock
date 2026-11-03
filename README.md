@@ -1,7 +1,7 @@
 About lal-feedstock
 ===================
 
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/lal-feedstock/blob/main/LICENSE.txt)
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/rattler-feedstock/blob/main/LICENSE.txt)
 
 
 About lal
@@ -18,27 +18,6 @@ Development: https://git.ligo.org/lscsoft/lalsuite/
 Documentation: https://lscsoft.docs.ligo.org/lalsuite/lal/
 
 The LSC Algorithm Library for gravitational wave data analysis.
-This package contains the shared-object libraries needed to run
-applications that use the LAL library.  If you want to install
-the Python bindings, please install the associated python-lal
-package.
-
-
-About lal
----------
-
-Home: https://wiki.ligo.org/Computing/LALSuite
-
-Package license: GPL-2.0-or-later
-
-Summary: LSC Algorithm Library
-
-Development: https://git.ligo.org/lscsoft/lalsuite/
-
-Documentation: https://lscsoft.docs.ligo.org/lalsuite/lal/
-
-The LSC Algorithm Library for gravitational wave data analysis.
-
 
 About liblal
 ------------
@@ -49,14 +28,13 @@ Package license: GPL-2.0-or-later
 
 Summary: LSC Algorithm Library shared object libraries
 
-Development: https://git.ligo.org/lscsoft/lalsuite.git
+Development: https://git.ligo.org/lscsoft/lalsuite/
 
 Documentation: https://lscsoft.docs.ligo.org/lalsuite/lal/
 
 The LSC Algorithm Library for gravitational wave data analysis.
 This package contains the shared-object libraries needed to run
 applications that use the LAL library.
-
 
 About python-lal
 ----------------
@@ -79,7 +57,6 @@ Note: this package only provides the importable Python libraries.
 All command-line interfaces, scripts, and executables are
 part of the `lal` package.
 
-
 Current build status
 ====================
 
@@ -87,8 +64,8 @@ Current build status
 <table><tr>
     <td>GitHub Actions</td>
     <td>
-      <a href="https://github.com/conda-forge/lal-feedstock/actions/workflows/conda-build.yml">
-        <img src="https://github.com/conda-forge/lal-feedstock/actions/workflows/conda-build.yml/badge.svg?event=push&branch=main">
+      <a href="https://github.com/conda-forge/rattler-feedstock/actions/workflows/conda-build.yml">
+        <img src="https://github.com/conda-forge/rattler-feedstock/actions/workflows/conda-build.yml/badge.svg?event=push&branch=main">
       </a>
     </td>
   </tr>
@@ -98,8 +75,8 @@ Current build status
     <td>
       <details>
         <summary>
-          <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=3989&branchName=main">
-            <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/lal-feedstock?branchName=main">
+          <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=27840&branchName=main">
+            <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/rattler-feedstock?branchName=main">
           </a>
         </summary>
         <table>
@@ -107,43 +84,43 @@ Current build status
           <tbody><tr>
               <td>osx_64_fft_implfftwhdf51.14.6</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=3989&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/lal-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_fft_implfftwhdf51.14.6" alt="variant">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=27840&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/rattler-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_fft_implfftwhdf51.14.6" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>osx_64_fft_implfftwhdf52</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=3989&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/lal-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_fft_implfftwhdf52" alt="variant">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=27840&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/rattler-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_fft_implfftwhdf52" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>osx_64_fft_implmklhdf51.14.6</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=3989&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/lal-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_fft_implmklhdf51.14.6" alt="variant">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=27840&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/rattler-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_fft_implmklhdf51.14.6" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>osx_64_fft_implmklhdf52</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=3989&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/lal-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_fft_implmklhdf52" alt="variant">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=27840&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/rattler-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_fft_implmklhdf52" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>osx_arm64_hdf51.14.6</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=3989&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/lal-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_hdf51.14.6" alt="variant">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=27840&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/rattler-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_hdf51.14.6" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>osx_arm64_hdf52</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=3989&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/lal-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_hdf52" alt="variant">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=27840&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/rattler-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_hdf52" alt="variant">
                 </a>
               </td>
             </tr>
@@ -255,6 +232,7 @@ mamba repoquery depends lal --channel conda-forge
 </details>
 
 
+
 About conda-forge
 =================
 
@@ -269,9 +247,7 @@ for each of the installable packages. Such a repository is known as a *feedstock
 A feedstock is made up of a conda recipe (the instructions on what and how to build
 the package) and the necessary configurations for automatic building using freely
 available continuous integration services. Thanks to the awesome service provided by
-[Azure](https://azure.microsoft.com/en-us/services/devops/), [GitHub](https://github.com/),
-[CircleCI](https://circleci.com/), [AppVeyor](https://www.appveyor.com/),
-[Drone](https://cloud.drone.io/welcome), and [TravisCI](https://travis-ci.com/)
+[Azure](https://azure.microsoft.com/en-us/services/devops/) and [GitHub](https://github.com/)
 it is possible to build and upload installable packages to the
 [conda-forge](https://anaconda.org/conda-forge) [anaconda.org](https://anaconda.org/)
 channel for Linux, Windows and OSX respectively.
