@@ -1,8 +1,8 @@
 schema_version: 1
 
 context:
-  version: "7.7.0"
-  build_number: 7
+  version: "8.0.0"
+  build_number: 0
   # dependencies
   swig_version: 4.4.1
 
@@ -12,7 +12,7 @@ recipe:
 
 source:
   - url: https://software.igwn.org/sources/source/lalsuite/lal-${{ version }}.tar.xz
-    sha256: 37a6abda137ea8319bff4d5f3018adc79bb0a007344f8bd512a14192ccfde12b
+    sha256: 1c9d9d682dccfe19000b43f7280c2b93521f6fe1295ef7e65adb68d55bffdecf
     patches:
       # to update the patches for a new release:
       #
@@ -36,9 +36,6 @@ source:
       - if: linux
         then:
           - patches/0001-lal-use-RTLD_DEEPBIND-when-importing-the-LAL-SWIG-li.patch
-      # backport https://git.ligo.org/lscsoft/lalsuite/-/merge_requests/2529
-      - patches/0002-lal-swig-SWIGPython.i-use-import_array1-0-to-import-.patch
-      - patches/0003-lal-swig-SWIGPython.i-SwigPyObject_type-was-renamed-.patch
 
 build:
   number: ${{ build_number | int + 100 if fft_impl == "fftw" else build_number }}
