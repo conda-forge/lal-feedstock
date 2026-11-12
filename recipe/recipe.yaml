@@ -1,8 +1,8 @@
 schema_version: 1
 
 context:
-  version: "8.0.0"
-  build_number: 1
+  version: "8.0.1"
+  build_number: 0
   # dependencies
   swig_version: 4.4.1
 
@@ -12,7 +12,7 @@ recipe:
 
 source:
   - url: https://software.igwn.org/sources/source/lalsuite/lal-${{ version }}.tar.xz
-    sha256: 1c9d9d682dccfe19000b43f7280c2b93521f6fe1295ef7e65adb68d55bffdecf
+    sha256: 3176b96d17fb1ddfabfe97f3ed56cbd2b65c538af42b679f0fb981667e11faee
     patches:
       # to update the patches for a new release:
       #
